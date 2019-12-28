@@ -1,0 +1,136 @@
+title = "Checkout"
+url = "/checkout"
+layout = "basic"
+is_hidden = 0
+
+[ShippingTypeList]
+
+[Cart]
+==
+{% set obShippingTypeList = ShippingTypeList.make().sort().active() %}
+<h1 class="text-center">Checkout</h1>
+<div class="flex flex-wrap">
+    <div class="w-full md:w-1/2 p-4">
+
+	<div id="get-email" class="card border bg-white p-6 m-4">
+	    <div class="card-title text-lg font-bold py-2">
+		<div>1. Your Email</div>
+	    </div>
+	    <div class="card-body-form py-2 font-sans">
+		<form>
+		    <div class="form-control">
+			<input type="email" id="email">
+		    </div>
+		    <div class="text-gray-600 text-xs">
+			You'll receive receipts and notifications at this email address
+		    </div>
+		    <button class="w-full" disabled>continue</button>
+		</form>
+		<div class="result text-gray-500"></div>
+	    </div>
+	</div>
+
+	<div id="get-shipping" class="card border bg-white p-6 m-4">
+	    <div class="card-title text-lg font-bold py-2">
+		<div>2. Shipping</div>
+	    </div>
+	    <div class="card-body py-2 hidden font-sans">
+		<form>
+		    <div class="flex flex-row flex-wrap">
+			{% if obShippingTypeList.isNotEmpty() %}
+			<div class="form-control">
+			    <select id="shipping-type">
+			    {% for item in obShippingTypeList %}
+				<option value="{{ item.id }}">{{ item.name }}</option>
+			    {% endfor %}
+			    </select>
+			</div>
+			{% endif %}
+			<div class="form-control w-full md:w-1/2">
+			    <input type="text" id="first" placeholder="First Name" required>
+			</div>
+			<div class="form-control w-full md:w-1/2">
+			    <input type="text" id="last" placeholder="Last Name" required>
+			</div>
+			<div class="form-control w-full">
+			    <input type="text" id="address1" placeholder="Address 1" required>
+			</div>
+			<div class="form-control w-full">
+			    <input type="text" id="address2" placeholder="Address 2">
+			</div>
+			<div class="form-control w-full">
+			    <input type="text" id="city" placeholder="City" required>
+			</div>
+			<div class="form-control w-full">
+			    <select id="state">
+				{% partial 'state_options' %}
+			    </select>
+			</div>
+			<div class="form-control w-full">
+			    <input type="text" id="zip" placeholder="ZIP Code" required>
+			</div>
+			<div class="form-control w-full">
+			    <input type="tel" id="phone" placeholder="Phone Number" required>
+			</div>
+		    </div>
+		    <button class="w-full" disabled>continue</button>
+		</form>
+		<div class="result text-gray-500"></div>
+	    </div>
+	</div>
+
+	<div id="get-payment" class="card border bg-white p-6 m-4">
+	    <div class="card-title text-lg font-bold py-2">
+		<div>3. Payment</div>
+	    </div>
+	    <div class="card-body py-2 hidden font-sans">
+		<div class="flex flex-row flex-wrap">
+		    <div id="paypal-button-container"></div>
+		</div>
+	    </div>
+
+	</div>
+    </div>
+
+
+    <div class="w-full md:w-1/2 p-4">
+	<div class="order-summary card border bg-white p-6 m-4">
+	    <div class="card-title text-lg font-bold">
+		<span class="text-lg font-bold">Order Summary</span>
+		<span class="float-right text-sm text-blue-500"><a href="{{ 'cart'|page }}">Edit Cart</a></span>
+	    </div>
+	    <div class="card-body font-sans">
+		{% partial 'cart/cart-item-summary' %}
+	    </div>
+	</div>
+    </div>
+</div>
+
+{% put page_scripts %}
+<script src="https://www.paypal.com/sdk/js?client-id=ASx3OIVkSlsRVWtrYHEr1MYvjFwfYkKyxwsrrxwZpwBolYkSRtgofGVikVrFcSX5OcEfPRx0BjpcL3TJ&currency=USD" data-sdk-integration-source="button-factory"></script>
+<script>
+ paypal.Buttons({
+     style: {
+	 shape: 'rect',
+	 color: 'blue',
+	 layout: 'vertical',
+	 label: 'paypal',
+	 
+     },
+     createOrder: function(data, actions) {
+	 return actions.order.create({
+	     purchase_units: [{
+		 amount: {
+		     value: '1'
+		 }
+	     }]
+	 });
+     },
+     onApprove: function(data, actions) {
+	 return actions.order.capture().then(function(details) {
+	     alert('Transaction completed by ' + details.payer.name.given_name + '!');
+	 });
+     }
+ }).render('#paypal-button-container');
+</script>
+{% endput %}

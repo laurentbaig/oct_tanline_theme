@@ -1,0 +1,17 @@
+title = "cart"
+url = "/cart"
+layout = "default"
+is_hidden = 0
+
+[Cart]
+==
+<div class="w-11/12 mx-auto">
+    <h1 class="uppercase text-4xl text-center">Shopping Cart</h1>
+    <div id="cart-item-wrapper">
+    {% partial 'cart/cart-item-list' %}
+    </div>
+    <div class="text-right py-4">
+	<a class="btn btn-lg text-lg " href="{{ 'checkout'|page }}">Checkout</a>
+    </div>
+</div>
+

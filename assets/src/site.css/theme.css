@@ -1,0 +1,20 @@
+body {
+    @apply font-sans;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+}
+
+.actionable {
+    transition: all .3s ease-in-out;
+}
+
+.actionable:hover {
+    opacity: .6;
+    cursor: pointer;
+}
+
+#footer {
+    height: 0;
+}

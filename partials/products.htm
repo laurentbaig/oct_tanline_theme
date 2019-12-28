@@ -1,0 +1,18 @@
+{% set obProductList = ProductList.make().sort(ProductList.getSorting()).active().category(category.id) %}
+{% if obProductList.isNotEmpty() %}
+<div class="project-container">
+    {% for obProduct in obProductList %}
+    <div class="project" data-id="{{ obProduct.id }}">
+	<a href="{{ 'product-page'|page({ slug: obProduct.slug }) }}">
+	    <div class="project-meta show">
+		<h2 class="block text-center absolute bottom-0 w-full px-4 py-2 bg-white">{{ obProduct.name }}</h2>
+	    </div>
+	    <div class="image-list">
+		{% set image = obProduct.preview_image %}
+		<img src="{{ image.path }}" title="{{ image.title }}" alt="{{ image.description }}">
+	    </div>
+	</a>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

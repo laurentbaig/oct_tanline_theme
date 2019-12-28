@@ -1,0 +1,39 @@
+title = "Home"
+url = "/"
+layout = "default"
+description = "Home page"
+is_hidden = 0
+
+[CategoryPage]
+slug = "featured"
+slug_required = 1
+smart_url_check = 0
+has_wildcard = 0
+skip_error = 0
+
+[ProductList]
+sorting = "no"
+==
+{# Get category items #}
+{% set obCategory = CategoryPage.get() %}
+{% set obProductList = ProductList.make().sort(ProductList.getSorting()).active().category(obCategory.id) %}
+{% if obProductList.isNotempty() %}
+<h1 class="uppercase text-4xl text-center">Welcome to tanline printing!</h1>
+
+<div class="project-container">
+    {% for project in obProductList %}
+    <div class="project">
+	<div class="project-meta">
+	    <h2 class=project-title">{{ project.name }}</h2>
+	    <div class="project-description">{{ project.description }}</div>
+	</div>
+	<div class="image-list">
+	    <div class="image">
+		{% set image = project.preview_image %}
+		<img src="{{ image.path }}" title="{{ image.title }}" alt="{{ image.description }}">
+	    </div>
+	</div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

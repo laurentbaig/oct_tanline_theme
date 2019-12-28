@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Laila|Nunito');
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "animate.css/animate.css";
+
+@import 'site.css/theme.css';
+@import 'site.css/form.css';
+@import 'site.css/mobile.css';
+@import 'site.css/nav.css';
+@import 'site.css/project.css';
+@import 'site.css/shopping.css';
+
+@import 'site.css/animate.css';

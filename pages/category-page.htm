@@ -1,0 +1,42 @@
+title = "Category Page"
+url = "/category-page/:slug"
+layout = "default"
+is_hidden = 0
+
+[CategoryPage]
+slug = "{{ :slug }}"
+slug_required = 1
+smart_url_check = 0
+has_wildcard = 0
+skip_error = 0
+
+[ProductList]
+sorting = "no"
+
+[CatalogBreadcrumbs]
+==
+{# Get category item #}
+{% set obCategory = CategoryPage.get() %}
+{% set arBreadcrumbs = CatalogBreadcrumbs.getByCategoryID(obCategory.id) %}
+
+{% if arBreadcrumbs is not empty %}
+<div class="w-11/12 mx-auto">
+<ul>
+    <li class="inline-block"><a href="{{ 'shop'|page }}">Shop</a> >> </li>
+    {% for arItem in arBreadcrumbs %}
+    <li class="inline-block" data-id="{{ arItem.id }}" class="{% if arItem.active %} _active {% endif %}">
+	{% if not loop.last %}
+	<a href="{{ 'category-page'|page({slug: arItem.slug}) }}">{{ arItem.name }}</a>
+	>>
+	{% else %}
+	{{ arItem.name }}
+	{% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<div>{{ obCategory.description|raw }}</div>
+{% partial 'products' category=obCategory %}
+</div>

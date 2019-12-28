@@ -1,0 +1,40 @@
+{% set obCartElementList = Cart.get() %}
+{{ dump(obCartElementList) }}
+{% if obCartElementList.isNotEmpty() %}
+<div class="flex flex-row flex-nowrap">
+    <div class="flex-1">Name</div>
+    <div class="flex-1">Quantity</div>
+    <div class="flex-1 text-right">Price</div>
+</div>
+<div class="border border-gray-300 my-2"></div>
+{% for obCartElement in obCartElementList %}
+<div class="cart-item flex flex-row flex-nowrap text-gray-700">
+    {% set obOffer = obCartElement.offer %}
+    <div class="flex-1">{{ obOffer.product.name }}</div>
+    <div class="flex-1 text-right">{{ obCartElement.quantity }}</div>
+    <div class="flex-1 text-right">{{ obCartElementList.getCurrency() }}{{ obCartElement.price_value|number_format(2) }}</div>
+</div>
+<div class="border border-gray-300 my-2"></div>
+{% endfor %}
+
+<div class="text-gray-500">
+    <div class="inline-block">Subtotal</div>
+    <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
+	<span class="subtotal">{{ obCartElementList.getTotalPriceValue()|number_format(2) }}</span>
+    </div>
+</div>
+<div class="text-gray-500">
+    <div class="inline-block">Tax</div>
+    <div class="inline-block float-right text-right">
+	<span class="tax-amount">&dash;</span>
+    </div>
+</div>
+<div class="text-gray-500">
+    <div class="inline-block">Shipping</div>
+    <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
+	<span class="shipping-amount">{{ obCartElementList.shipping_price }}</span>
+    </div>
+</div>
+{% else %}
+<div>Cart is empty</div>
+{% endif %}

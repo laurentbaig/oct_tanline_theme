@@ -1,0 +1,27 @@
+#mobileNav ul > li {
+	height: 30px;
+	transition: height .4s ease-in-out;
+}
+
+#mobileNav .flip {
+	display: inline-block;
+	transform: rotateX(180deg);
+	transition: transform .4s ease-in-out;
+}
+
+#mobileNav.hide-nav .flip {
+	transform: rotateX(0deg);
+}
+
+#mobileNav.hide-nav ul > li {
+	height: 0;
+}
+
+.main-nav ul > li {
+    @apply text-center flex-1 font-hairline text-gray-600;
+    transition: color .3s ease-in-out;
+}
+
+.main-nav ul > li:hover {
+    @apply text-gray-800;
+}

@@ -1,0 +1,32 @@
+body {
+    padding-bottom: 56px;
+    margin-bottom: 0;
+}
+
+.shopping-cart-pill {
+    @apply fixed inset-x-0 bottom-0 flex;
+    @apply px-8 py-4;
+    @apply bg-black;
+    @apply text-white;
+    margin: 0;
+}
+
+.shopping-cart-pill > div {
+    @apply flex-1;
+}
+
+.shopping-cart-pill > div:last-child {
+    @apply text-right;
+}
+
+@media screen and (min-width: 768px) {
+    body {
+	padding-bottom: 0;
+    }
+
+    .shopping-cart-pill {
+	@apply fixed top-0 right-0 left-auto bottom-auto;
+	@apply mt-4 mr-8 rounded-full;
+	min-width: 250px;
+    }
+}

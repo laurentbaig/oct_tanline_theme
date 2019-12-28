@@ -1,0 +1,70 @@
+.project-container {
+    @apply flex flex-wrap;
+}
+
+.project {
+    @apply relative;
+    flex: 0 0 50%;
+}
+
+.project:before {
+    content: '';
+    float: left;
+    padding-top: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .project {
+	flex: 0 0 25%;
+    }
+}
+
+.project .project-meta {
+    @apply top-0 left-0 w-full h-full;
+    @apply hidden absolute;
+}
+
+.project .project-meta.show {
+    @apply block;
+
+    z-index: 50;
+}
+
+.project .image-list {
+    @apply opacity-100;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    padding: 8px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity .3s ease-out;
+    width: 100%;
+}
+
+.project:hover .image-list {
+    @apply opacity-50;
+}
+
+.project .image-list .image {
+    background-color: tomato;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.project .image-list .image img {
+}
+
+
+.product-panel {
+    flex: 0 0 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .product-panel {
+	flex: 0 0 50%;
+    }
+}
