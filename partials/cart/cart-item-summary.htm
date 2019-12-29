@@ -1,8 +1,12 @@
-{% set obCartElementList = Cart.get() %}
-{{ dump(obCartElementList) }}
+{% set obShippingType = Cart.getActiveShippingTypeFromRequest() %}
+{% set obCartElementList = Cart.get(obShippingType) %}
+{% set totalPriceData = obCartElementList.getTotalPriceData().getData() %}
+{% set subtotal = totalPriceData.pricevalue %}
+{% set taxvalue = totalPriceData.tax_price_value %}
+{% set shippingvalue = obShippingType ? obShippingType.getFullPriceValue() : 0 %}
 {% if obCartElementList.isNotEmpty() %}
 <div class="flex flex-row flex-nowrap">
-    <div class="flex-1">Name</div>
+    <div class="flex-1">Name1</div>
     <div class="flex-1">Quantity</div>
     <div class="flex-1 text-right">Price</div>
 </div>
@@ -20,19 +24,25 @@
 <div class="text-gray-500">
     <div class="inline-block">Subtotal</div>
     <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
-	<span class="subtotal">{{ obCartElementList.getTotalPriceValue()|number_format(2) }}</span>
+	<span class="subtotal">{{ subtotal|number_format(2) }}</span>
     </div>
 </div>
 <div class="text-gray-500">
     <div class="inline-block">Tax</div>
     <div class="inline-block float-right text-right">
-	<span class="tax-amount">&dash;</span>
+	<span class="tax-amount">{{ taxvalue|number_format(2) }}</span>
     </div>
 </div>
 <div class="text-gray-500">
-    <div class="inline-block">Shipping</div>
+    <div class="inline-block">Shipping {% if obShippingType %}({{ obShippingType.name }}){% endif %}</div>
     <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
-	<span class="shipping-amount">{{ obCartElementList.shipping_price }}</span>
+	<span class="shipping-amount">{{ shippingvalue|number_format(2) }}</span>
+    </div>
+</div>
+<div class="text-gray-500">
+    <div class="inline-block">Total</div>
+    <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
+	<span class="total-amount">{{ (subtotal+taxvalue+shippingvalue)|number_format(2) }}</span>
     </div>
 </div>
 {% else %}

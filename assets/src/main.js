@@ -147,12 +147,20 @@ window.addEventListener('load', function() {
 	});
 	getEmail.addEventListener('click', function (e) {
 	    e.preventDefault();
-	    if (e.target.matches('button')) {
+	    if (e.target.matches('.edit-button')) {
+		getEmail.querySelector('form').classList.remove('hidden');
+		document.querySelector('.edit-button').classList.add('hidden');
+		document.querySelector('#get-shipping .card-body').classList.add('hidden');
+		document.querySelector('#get-payment .card-body').classList.add('hidden');
+		getEmail.querySelector('.result').innerHTML = '';
+	    }
+	    else if (e.target.matches('button')) {
 		// hide the form
 		getEmail.querySelector('form').classList.add('hidden');
 		// get the values
 		let email = getEmail.querySelector('#email').value;
 		getEmail.querySelector('.result').innerHTML = `${email}`;
+		getEmail.querySelector('.edit-button').classList.remove('hidden');
 		// move to the shipping form
 		document.querySelector('#get-shipping .card-body').classList.remove('hidden');
 	    }
@@ -172,34 +180,39 @@ window.addEventListener('load', function() {
 	    let state = getShipping.querySelector("#state").value;
 	    let zip = getShipping.querySelector("#zip").value;
 	    let phone = getShipping.querySelector('#phone').value;
+	    let shipping = getShipping.querySelector('#shipping-type').value;
 	    if (first.length > 0 && last.length > 0 && address1.length > 0
 		&& city.length > 0 && zip.length > 0 && state.length > 0
-		&& phone.length > 0) {
+		&& phone.length > 0 && shipping > 0) {
 		getShipping.querySelector('button').disabled = false;
 	    } else {
 		getShipping.querySelector('button').disabled = true;
 	    }
 
 	    if (e.target.matches('#shipping-type')) {
+		console.log(e.target.value);
 		request.sendData('Cart::onSetShippingType', {
 		    data: { 'shipping_type_id': e.target.value },
 		    success: function(response) {
 			console.log(response);
-		    }
-		    
-		    /*
+		    },
 		    update: {
 			'cart/cart-item-summary': '.order-summary > .card-body'
 		    }
-		    */
-		})
+		});
 	    }
 
 	    return false;
 	});
 	getShipping.addEventListener('click', function(e) {
 	    e.preventDefault();
-	    if (e.target.matches('button')) {
+	    if (e.target.matches('.edit-button')) {
+		getShipping.querySelector('form').classList.remove('hidden');
+		getShipping.querySelector('.edit-button').classList.add('hidden');
+		getShipping.querySelector('.result').innerHTML = '';
+		document.querySelector('#get-payment .card-body').classList.add('hidden');
+	    }
+	    else if (e.target.matches('button')) {
 		let first = getShipping.querySelector("#first").value;
 		let last = getShipping.querySelector("#last").value;
 		let address1 = getShipping.querySelector("#address1").value;
@@ -215,8 +228,10 @@ window.addEventListener('load', function() {
 		    + `<div>${phone}</div>`;
 		getShipping.querySelector('.result').innerHTML = result;
 		getShipping.querySelector('form').classList.add('hidden');
+		getShipping.querySelector('.edit-button').classList.remove('hidden');
 		document.querySelector('#get-payment .card-body').classList.remove('hidden');
-		let totalPrice = document.querySelector('.order-summary').querySelector('.total-price').innerHTML;
+		//let totalPrice = document.querySelector('.order-summary .total-price').innerHTML;
+
 	    }
 	    return false;
 	});
