@@ -1,7 +1,7 @@
 {% set obShippingType = Cart.getActiveShippingTypeFromRequest() %}
 {% set obCartElementList = Cart.get(obShippingType) %}
 {% set totalPriceData = obCartElementList.getTotalPriceData().getData() %}
-{% set subtotal = totalPriceData.pricevalue %}
+{% set subtotal = totalPriceData.price_value %}
 {% set taxvalue = totalPriceData.tax_price_value %}
 {% set shippingvalue = obShippingType ? obShippingType.getFullPriceValue() : 0 %}
 {% if obCartElementList.isNotEmpty() %}

@@ -25,7 +25,6 @@ window.addEventListener('load', function() {
     // contact form
     let contact_form = document.querySelector("#contact-form");
     if (contact_form) {
-	console.log("Prepping contact form")
 	contact_form.addEventListener("submit", (e) => {
      	    if (e.preventDefault) e.preventDefault();
 	    let name = e.target.querySelector("input[name=name]").value;
@@ -38,7 +37,6 @@ window.addEventListener('load', function() {
 	    }
 	    let xhr = new XMLHttpRequest();
 	    xhr.addEventListener('load', (e) => {
-		console.log(e);
 		if (xhr.status >= 200 && xhr.status < 300) {
 		    statusbox.innerHTML = '<p class="text-green-600">Your message has been sent<p>';
 		} else {
@@ -60,14 +58,11 @@ window.addEventListener('load', function() {
     let product_panels = document.querySelectorAll('.product-panel');
     product_panels.forEach((panel) => {
 	panel.addEventListener('click', function (e) {
-	    console.log(e);
 	    e.preventDefault();
 	    if (e.target.dataset.action=='add-to-cart') {
-		console.log('Add item to cart');
 		let itemid = panel.dataset.itemid;
 		let offerid = e.target.dataset.offerid;
 		let quantity = panel.querySelector('input[type=number]').value;
-		console.log(`Buy ${quantity} of item id ${itemid}`)
 		let data = {
 		    cart: [
 			{offer_id: offerid, quantity: quantity, property: {}}
@@ -129,9 +124,7 @@ window.addEventListener('load', function() {
     if (getEmail) {
 	getEmail.addEventListener('input', function (e) {
 	    e.preventDefault();
-	    console.log('listening');
 	    if (e.target.matches('input[type=email]')) {
-		console.log('matched');
 		let btn = getEmail.querySelector('button');
 		if (e.target.value.length > 0) {
 		    if (validateEmail(e.target.value)) {
@@ -139,7 +132,6 @@ window.addEventListener('load', function() {
 		    }
 		}
 		else {
-		    console.log('disable button');
 		    btn.disabled = true;
 		}
 	    }
@@ -190,7 +182,6 @@ window.addEventListener('load', function() {
 	    }
 
 	    if (e.target.matches('#shipping-type')) {
-		console.log(e.target.value);
 		request.sendData('Cart::onSetShippingType', {
 		    data: { 'shipping_type_id': e.target.value },
 		    success: function(response) {
@@ -221,6 +212,7 @@ window.addEventListener('load', function() {
 		let state = getShipping.querySelector("#state").value;
 		let zip = getShipping.querySelector("#zip").value;
 		let phone = getShipping.querySelector('#phone').value;
+		let shipping = getShipping.querySelector('#shipping-type').value;
 		let result=`<div>${first} ${last}</div>`
 		    + `<div>${address1}</div>`
 		    + `<div>${address2}</div>`
@@ -230,7 +222,59 @@ window.addEventListener('load', function() {
 		getShipping.querySelector('form').classList.add('hidden');
 		getShipping.querySelector('.edit-button').classList.remove('hidden');
 		document.querySelector('#get-payment .card-body').classList.remove('hidden');
-		//let totalPrice = document.querySelector('.order-summary .total-price').innerHTML;
+		let totalPrice = document.querySelector('.order-summary .total-amount').innerHTML;
+
+		// create the paypal button
+		console.log('make button!');
+		document.querySelector('#paypal-button-container').innerHTML = '';
+		paypal.Buttons({
+		    style: {
+			shape: 'rect',
+			color: 'blue',
+			layout: 'vertical',
+			label: 'paypal',
+			
+		    },
+		    createOrder: function(data, actions) {
+			return actions.order.create({
+			    purchase_units: [{
+				amount: {
+				    value:totalPrice 
+				}
+			    }]
+			});
+		    },
+		    onApprove: function(data, actions) {
+			return actions.order.capture().then(function(details) {
+			    let data = {
+				order: {
+				    'payment_method_id': 0,
+				    'shipping_type_id': shipping,
+				    'shipping_price': document.querySelector('.order-summary .shipping-amount').innerHTML,
+				    'property': {
+				    },
+				},
+				shipping_address: {
+				    address1,
+				    address2,
+				    city,
+				    state,
+				    postcode: zip
+				},
+				user: {
+				    'name': first,
+				    'last_name': last,
+				    'email': document.querySelector('#get-email input[type=email]').value,
+				    'phone': phone,
+				}
+			    };
+			    request.sendData('MakeOrder::onCreate', {
+				'data': data
+			    });
+			    //alert('Transaction completed by ' + details.payer.name.given_name + '!');
+			});
+		    }
+		}).render('#paypal-button-container');
 
 	    }
 	    return false;

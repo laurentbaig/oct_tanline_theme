@@ -2,7 +2,6 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import "animate.css/animate.css";
 
 @import 'site.css/theme.css';
 @import 'site.css/form.css';

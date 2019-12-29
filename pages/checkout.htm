@@ -6,6 +6,9 @@ is_hidden = 0
 [ShippingTypeList]
 
 [Cart]
+
+[MakeOrder]
+mode = "ajax"
 ==
 {% set obShippingTypeList = ShippingTypeList.make().sort().active() %}
 <h1 class="text-center">Checkout</h1>
@@ -89,7 +92,7 @@ is_hidden = 0
 	    <div class="card-title text-lg font-bold py-2">
 		<div>3. Payment</div>
 	    </div>
-	    <div class="card-body py-2 hidden font-sans">
+	    <div class="card-body py-2 font-sans">
 		<div class="flex flex-row flex-wrap">
 		    <div id="paypal-button-container"></div>
 		</div>
@@ -114,6 +117,7 @@ is_hidden = 0
 
 {% put page_scripts %}
 <script src="https://www.paypal.com/sdk/js?client-id=ASx3OIVkSlsRVWtrYHEr1MYvjFwfYkKyxwsrrxwZpwBolYkSRtgofGVikVrFcSX5OcEfPRx0BjpcL3TJ&currency=USD" data-sdk-integration-source="button-factory"></script>
+{#
 <script>
  paypal.Buttons({
      style: {
@@ -127,7 +131,7 @@ is_hidden = 0
 	 return actions.order.create({
 	     purchase_units: [{
 		 amount: {
-		     value: '1'
+		     value: '.01'
 		 }
 	     }]
 	 });
@@ -139,4 +143,5 @@ is_hidden = 0
      }
  }).render('#paypal-button-container');
 </script>
+#}
 {% endput %}
