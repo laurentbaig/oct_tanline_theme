@@ -3,23 +3,18 @@ url = "/category-page/:slug"
 layout = "default"
 is_hidden = 0
 
-[CategoryPage]
+[CategoryItem]
 slug = "{{ :slug }}"
-slug_required = 1
-smart_url_check = 0
-has_wildcard = 0
-skip_error = 0
 
 [ProductList]
-sorting = "no"
 
-[CatalogBreadcrumbs]
+[Breadcrumbs]
 ==
 {# Get category item #}
-{% set obCategory = CategoryPage.get() %}
-{% set arBreadcrumbs = CatalogBreadcrumbs.getByCategoryID(obCategory.id) %}
+{% set obCategory = CategoryItem.get() %}
 
-{% if arBreadcrumbs is not empty %}
+{% set arBreadcrumbs = Breadcrumbs.get(obCategory) %}
+{% if arBreadcrumbs|length > 0 %}
 <div class="w-11/12 mx-auto">
 <ul>
     <li class="inline-block"><a href="{{ 'shop'|page }}">Shop</a> >> </li>

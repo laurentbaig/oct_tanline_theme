@@ -1,4 +1,4 @@
-{% set obProductList = ProductList.make().sort(ProductList.getSorting()).active().category(category.id) %}
+{% set obProductList = ProductList.get(category) %}
 {% if obProductList.isNotEmpty() %}
 <div class="project-container">
     {% for obProduct in obProductList %}
@@ -15,4 +15,6 @@
     </div>
     {% endfor %}
 </div>
+{% else %}
+<div class="">No products.</div>
 {% endif %}

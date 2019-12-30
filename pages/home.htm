@@ -4,19 +4,13 @@ layout = "default"
 description = "Home page"
 is_hidden = 0
 
-[CategoryPage]
-slug = "featured"
-slug_required = 1
-smart_url_check = 0
-has_wildcard = 0
-skip_error = 0
+[CategoryItem]
+slug = "t-shirts"
 
 [ProductList]
-sorting = "no"
 ==
-{# Get category items #}
-{% set obCategory = CategoryPage.get() %}
-{% set obProductList = ProductList.make().sort(ProductList.getSorting()).active().category(obCategory.id) %}
+{% set obCategory = CategoryItem.get() %}
+{% set obProductList = ProductList.get(obCategory) %}
 {% if obProductList.isNotempty() %}
 <h1 class="uppercase text-4xl text-center">Welcome to tanline printing!</h1>
 
