@@ -3,18 +3,15 @@ url = "/product-page/:slug"
 layout = "default"
 is_hidden = 0
 
-[ProductPage]
+[ProductItem]
 slug = "{{ :slug }}"
-slug_required = 1
-smart_url_check = 0
-skip_error = 0
 
-[CatalogBreadcrumbs]
+[Breadcrumbs]
 ==
 <div class="w-11/12 mx-auto">
 {# Get product item #}
-{% set obProduct = ProductPage.get() %}
-{% set arBreadcrumbs = CatalogBreadcrumbs.getByProductID(obProduct.id) %}
+{% set obProduct = ProductItem.get() %}
+{% set arBreadcrumbs = Breadcrumbs.getFromProduct(obProduct) %}
 
 {% if arBreadcrumbs is not empty %}
 <ul>

@@ -10,30 +10,5 @@ is_hidden = 0
 <div class="w-11/12 mx-auto">
     <h1 class="uppercase text-4xl text-center">Shop</h1>
     {% set obCategoryList = CategoryList.getRootCategories() %}
-    {% if obCategoryList.isNotEmpty() %}
-    <div class="project-container">
-        {% for obCategory in obCategoryList %} {# if obCategory.product_count > 0 #}
-
-	{% if obCategory.preview_image is not empty %}
-	{% set image = obCategory.preview_image %}
-	{% else %}
-	{% set product = ProductList.get(obCategory).first() %}
-	{% set image = product.preview_image %}
-	{% endif %}
-        <div class="project" data-id="{{ obCategory.id }}">
-	    <a href="{{ 'category-page'|page({'slug': obCategory.slug }) }}">
-		<div class="project-meta show">
-		    <h2 class="block text-center absolute bottom-0 w-full px-4 py-2 bg-white">{{ obCategory.name }}</h2>
-		</div>
-		<div class="image-list">
-		    {% if image %}
-		    <img src="{{ image.getThumb(400,400,'crop') }}" title="{{ image.title }}"
-		 alt="{{ image.description }}">
-		    {% endif %}
-		</div>
-	    </a>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+    {% partial 'catalog/categories' categories=obCategoryList %}
 </div>
