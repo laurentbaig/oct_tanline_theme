@@ -9,52 +9,60 @@ slug = "{{ :slug }}"
 [Breadcrumbs]
 ==
 <div class="w-11/12 mx-auto">
-{# Get product item #}
-{% set obProduct = ProductItem.get() %}
-{% set arBreadcrumbs = Breadcrumbs.getFromProduct(obProduct) %}
+    {# Get product item #}
+    {% set obProduct = ProductItem.get() %}
+    {% set arBreadcrumbs = Breadcrumbs.getFromProduct(obProduct) %}
 
-{% if arBreadcrumbs is not empty %}
-<ul>
-    <li class="inline-block"><a href="{{ 'shop'|page }}">Shop</a> >> </li>
-    {% for arItem in arBreadcrumbs %}
-    <li class="inline-block" data-id="{{ arItem.id }}" class="{% if arItem.active %} _active {% endif %}">
-	{% if not loop.last %}
-	<a href="{{ 'category-page'|page({slug: arItem.slug}) }}">{{ arItem.name }}</a>
-	>>
-	{% else %}
-	{{ arItem.name }}
-	{% endif %}
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
+    {% if arBreadcrumbs is not empty %}
+    <ul>
+	<li class="inline-block"><a href="{{ 'shop'|page }}">Shop</a> >> </li>
+	{% for arItem in arBreadcrumbs %}
+	<li class="inline-block" data-id="{{ arItem.id }}" class="{% if arItem.active %} _active {% endif %}">
+	    {% if not loop.last %}
+	    <a href="{{ 'category-page'|page({slug: arItem.slug}) }}">{{ arItem.name }}</a>
+	    >>
+	    {% else %}
+	    {{ arItem.name }}
+	    {% endif %}
+	</li>
+	{% endfor %}
+    </ul>
+    {% endif %}
 
-<div class="container flex flex-wrap" data-id="{{ obProduct.id }}"> 
+    <div class="container flex flex-wrap" data-id="{{ obProduct.id }}"> 
 
-    <div class="product-panel">
-	{% if obProduct.preview_image is not empty %}
-	<img class="w-full" src="{{ obProduct.preview_image.path }}" title="{{ obProduct.preview_image.path }}""
-	     alt="{{ obProducct.preview_image.description }}">
-	{% endif %}
-    </div>
-    <div class="product-panel px-8" data-itemid="{{ obProduct.id }}">
-	<h1 class="uppercase text-xl"> {{ obProduct.name }}</h1>
-	{% set offer = obProduct.offer.first() %}
-	{% if offer.isnotempty() %}
-	<div class="product-price">{{ offer.currency }}{{ offer.price|number_format(2) }}</div>
-	<div class="product-description">{{ obProduct.description|raw }}</div>
-	<div class="py-4"></div>
-	<label>Quantity</label>
-	<div class="form-control w-50">
-	    <input type="number" value="1">
+	<div class="product-panel">
+	    {% if obProduct.preview_image is not empty %}
+	    <img class="w-full" src="{{ obProduct.preview_image.path }}" title="{{ obProduct.preview_image.path }}""
+		 alt="{{ obProducct.preview_image.description }}">
+	    {% endif %}
 	</div>
-	<div class="py-1"></div>
-	<button data-action="add-to-cart" data-offerid="{{ offer.id }}" class="px-8 py-4">Add to Cart</button>
-	{% else %}
-	<p>Please <a href="{{ 'contact'|page }}">contact</a> us for production of this item.</p>
-	{% endif %}
+	<div class="product-panel px-8" data-itemid="{{ obProduct.id }}">
+	    <h1 class="uppercase text-xl"> {{ obProduct.name }}</h1>
+	    {% for option in obProduct.options %}
+	    <label>{{ option.name }}</label>
+	    <div class="form-control">
+		<select>
+		    {% for item in option.optionItems %}
+		    <option value="{{ item.id }}">{{ item.name }}</option>
+		    {% endfor %}
+		</select>
+	    </div>
+	    {% endfor %}
+		</select>
+		<div class="product-price">$ {{ obProduct.price|number_format(2) }}</div>
+		<div class="product-description">{{ obProduct.description|raw }}</div>
+		<div class="py-4"></div>
+
+		{#
+		<label>Quantity</label>
+		<div class="form-control w-50">
+		    <input type="number" value="1">
+		</div>
+		<div class="py-1"></div>
+		<button data-action="add-to-cart" data-offerid="{{ offer.id }}" class="px-8 py-4">Add to Cart</button>
+		#}
+	</div>
+	
     </div>
-    
-    {{ obOffer }}
-</div>
 </div>
