@@ -34,17 +34,17 @@ slug = "{{ :slug }}"
 	<div class="product-panel">
 	    {% if obProduct.preview_image is not empty %}
 	    <img class="w-full" src="{{ obProduct.preview_image.path }}" title="{{ obProduct.preview_image.path }}""
-		 alt="{{ obProducct.preview_image.description }}">
+		 alt="{{ obProduct.preview_image.description }}">
 	    {% endif %}
 	</div>
 	<div class="product-panel px-8" data-itemid="{{ obProduct.id }}">
 	    <h1 class="uppercase text-xl"> {{ obProduct.name }}</h1>
-	    {% for option in obProduct.options %}
-	    <label>{{ option.name }}</label>
+	    {% for property in obProduct.properties %}
+	    <label>{{ property.name }}</label>
 	    <div class="form-control">
 		<select>
-		    {% for item in option.optionItems %}
-		    <option value="{{ item.id }}">{{ item.name }}</option>
+		    {% for option in property.options %}
+		    <option value="{{ option.id }}">{{ option.name }}</option>
 		    {% endfor %}
 		</select>
 	    </div>
