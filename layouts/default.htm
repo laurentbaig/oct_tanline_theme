@@ -1,6 +1,7 @@
 [staticMenu mainMenu]
 code = "main-menu"
 
+[Basket]
 ==
 <!DOCTYPE html>
 <html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en-US" >
@@ -53,12 +54,12 @@ code = "main-menu"
 	</div>
 
 
-	<!-- Shopping cart pill -->
-	{#
-	<div id="cart-pill-wrapper">
-	    {% partial 'cart/cart-pill' %}
+	<!-- Shopping basket pill -->
+	{% if Basket.exists() %}
+	<div id="basket-pill-wrapper">
+	    {% partial 'basket/basket-pill' %}
 	</div>
-	#}
+	{% endif %}
 
 	<!-- main layout -->
 	<div class="container mx-auto">

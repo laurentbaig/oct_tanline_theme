@@ -1,3 +1,47 @@
+{% set obBasket = Basket.get() %}
+{% set obBasketItems = obBasket.items %}
+
+{% if obBasketItems.isNotEmpty() %}
+<div class="flex flex-row flex-nowrap">
+    <div style="flex: 3">Name1</div>
+    <div class="flex-1">Quantity</div>
+    <div class="flex-1 text-right">Price</div>
+</div>
+<div class="border border-gray-300 my-2"></div>
+
+{% for obBasketItem in obBasketItems %}
+<div class="basket-item flex flex-row flex-nowrap text-gray-700">
+    <div style="flex: 3">
+	{{ obBasketItem.product.name }}
+	{% if obBasketItem.propertyOptions %} -
+	<span class="text-sm text-gray-600">
+	{% for opt in obBasketItem.propertyOptions %}
+	    {{ opt.name}}{% if not loop.last %}, {% endif %}
+	{% endfor %}
+	</span>
+	{% endif %}
+    </div>
+    <div class="flex-1 text-right">{{ obBasketItem.quantity }}</div>
+    <div class="flex-1 text-right">
+	${{ Basket.getItemPriceWithOptions(obBasketItem)*obBasketItem.quantity|number_format(2) }}
+    </div>
+</div>
+<div class="border border-gray-300 my-2"></div>
+{% endfor %}
+
+<div class="text-gray-500">
+    <div class="inline-block">Subtotal</div>
+    <div class="inline-block float-right text-right">
+	$<span class="subtotal">{{ Basket.getBasketSubtotal()|number_format(2) }}</span>
+    </div>
+</div>
+
+{% else %}
+<div>Basket is empty</div>
+
+{% endif %}
+
+{# 
 {% set obShippingType = Cart.getActiveShippingTypeFromRequest() %}
 {% set obCartElementList = Cart.get(obShippingType) %}
 {% set totalPriceData = obCartElementList.getTotalPriceData().getData() %}
@@ -48,3 +92,4 @@
 {% else %}
 <div>Cart is empty</div>
 {% endif %}
+#}

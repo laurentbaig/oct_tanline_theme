@@ -1,8 +1,0 @@
-{% set obCartElementList = Cart.get() %}
-{% if obCartElementList.isNotEmpty() %}
-{% set itemCount = obCartElementList.getTotalQuantity() %}
-<div class="shopping-cart-pill">
-    <div><i class="fas fa-shopping-cart"></i> <a href="{{ 'cart'|page }}">{{ itemCount}} item{{ itemCount > 1 ? 's' : '' }}</a></div>
-    <div>{{ obCartElementList.currency }}{{ obCartElementList.getTotalPriceValue()|number_format(2) }}</div>
-</div>
-{% endif %}

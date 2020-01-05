@@ -3,10 +3,10 @@ url = "/product-page/:slug"
 layout = "default"
 is_hidden = 0
 
+[Breadcrumbs]
+
 [ProductItem]
 slug = "{{ :slug }}"
-
-[Breadcrumbs]
 ==
 <div class="w-11/12 mx-auto">
     {# Get product item #}
@@ -42,7 +42,7 @@ slug = "{{ :slug }}"
 	    {% for property in obProduct.properties %}
 	    <label>{{ property.name }}</label>
 	    <div class="form-control">
-		<select>
+		<select class="property-option">
 		    {% for option in property.options %}
 		    <option value="{{ option.id }}">{{ option.name }}</option>
 		    {% endfor %}
@@ -54,14 +54,12 @@ slug = "{{ :slug }}"
 		<div class="product-description">{{ obProduct.description|raw }}</div>
 		<div class="py-4"></div>
 
-		{#
 		<label>Quantity</label>
 		<div class="form-control w-50">
 		    <input type="number" value="1">
 		</div>
 		<div class="py-1"></div>
-		<button data-action="add-to-cart" data-offerid="{{ offer.id }}" class="px-8 py-4">Add to Cart</button>
-		#}
+		<button data-action="add-to-cart" data-productid="{{ obProduct.id }}" class="px-8 py-4">Add to Cart</button>
 	</div>
 	
     </div>

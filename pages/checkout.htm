@@ -3,17 +3,15 @@ url = "/checkout"
 layout = "basic"
 is_hidden = 0
 
-[ShippingTypeList]
-
-[Cart]
-
-[MakeOrder]
-mode = "ajax"
+[Basket]
 ==
+{#
 {% set obShippingTypeList = ShippingTypeList.make().sort().active() %}
+#}
+
 <h1 class="text-center">Checkout</h1>
 <div class="flex flex-wrap">
-    <div class="w-full md:w-1/2 p-4">
+    <div class="w-full md:w-1/2 p-2">
 
 	<div id="get-email" class="card border bg-white p-6 m-4">
 	    <div class="card-title py-2">
@@ -42,6 +40,7 @@ mode = "ajax"
 	    <div class="card-body py-2 hidden font-sans">
 		<form>
 		    <div class="flex flex-row flex-wrap">
+			{#
 			{% if obShippingTypeList.isNotEmpty() %}
 			<div class="form-control">
 			    <select id="shipping-type">
@@ -55,6 +54,7 @@ mode = "ajax"
 			    </select>
 			</div>
 			{% endif %}
+			#}
 			<div class="form-control w-full md:w-1/2">
 			    <input type="text" id="first" placeholder="First Name" required>
 			</div>
@@ -102,14 +102,14 @@ mode = "ajax"
     </div>
 
 
-    <div class="w-full md:w-1/2 p-4">
+    <div class="w-full md:w-1/2 p-2">
 	<div class="order-summary card border bg-white p-6 m-4">
 	    <div class="card-title text-lg font-bold">
 		<span class="text-lg font-bold">Order Summary</span>
 		<span class="float-right text-sm text-blue-500"><a href="{{ 'cart'|page }}">Edit Cart</a></span>
 	    </div>
 	    <div class="card-body font-sans">
-		{% partial 'cart/cart-item-summary' %}
+		{% partial 'basket/basket-item-summary' %}
 	    </div>
 	</div>
     </div>

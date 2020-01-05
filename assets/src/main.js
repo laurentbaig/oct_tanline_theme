@@ -61,17 +61,25 @@ window.addEventListener('load', function() {
 	    e.preventDefault();
 	    if (e.target.dataset.action=='add-to-cart') {
 		let itemid = panel.dataset.itemid;
-		let offerid = e.target.dataset.offerid;
+		let product_id = e.target.dataset.productid;
+		let properties = panel.querySelectorAll('select.property-option');
+		let property_ids = [];
+		properties.forEach((property) => {
+		    property_ids.push(property.value);
+		});
+		
 		let quantity = panel.querySelector('input[type=number]').value;
 		let data = {
-		    cart: [
-			{offer_id: offerid, quantity: quantity, property: {}}
-		    ]
+		    basket: [{
+			product_id: product_id,
+			quantity: quantity,
+			properties: property_ids
+		    }]
 		};
-		request.sendData('Cart::onAdd', {
+		request.sendData('Basket::onAdd', {
 		    data: data,
 		    update: {
-			'cart/cart-pill': '#cart-pill-wrapper'
+			'basket/basket-pill': '#basket-pill-wrapper'
 		    }
 		});
 	    }
@@ -80,38 +88,40 @@ window.addEventListener('load', function() {
     });
 
     // cart interaction
-    let cart_item_wrapper = document.querySelector('#cart-item-wrapper');
-    if (cart_item_wrapper) {
-	cart_item_wrapper.addEventListener('change', function (e) {
+    let basket_item_wrapper = document.querySelector('#basket-item-wrapper');
+    if (basket_item_wrapper) {
+	// handles updating of quantities
+	basket_item_wrapper.addEventListener('change', function (e) {
 	    e.preventDefault();
-	    if (e.target.classList.contains('cart-update')) {
-		let offerid = e.target.dataset.offerid;
+	    if (e.target.classList.contains('basket-update')) {
+		let basket_item_id = e.target.dataset.basketitemid;
 		let quantity = e.target.value;
 		let data = {
-		    cart: [
-			{ 'offer_id': offerid, 'quantity': quantity}
+		    basket: [
+			{ 'basket_item_id': basket_item_id, 'quantity': quantity}
 		    ]
 		};
-		request.sendData('Cart::onUpdate', {
+		request.sendData('Basket::onUpdate', {
 		    data: data,
 		    update: {
-			'cart/cart-item-list': '#cart-item-wrapper',
-			'cart/cart-pill': '#cart-pill-wrapper'
+			'basket/basket-item-list': '#basket-item-wrapper',
+			'basket/basket-pill': '#basket-pill-wrapper'
 		    }
 		});
 	    }
 	    return false;
 	});
-	cart_item_wrapper.addEventListener('click', function (e) {
+
+	basket_item_wrapper.addEventListener('click', function (e) {
 	    e.preventDefault();
-	    if (e.target.classList.contains('cart-delete')) {
-		request.sendData('Cart::onRemove', {
+	    if (e.target.classList.contains('basket-delete')) {
+		request.sendData('Basket::onRemove', {
 		    data: {
-			cart: [ e.target.dataset.offerid ]
+			basket: [ e.target.dataset.basketitemid ]
 		    },
 		    update: {
-			'cart/cart-item-list': '#cart-item-wrapper',
-			'cart/cart-pill': '#cart-pill-wrapper'
+			'basket/basket-item-list': '#basket-item-wrapper',
+			'basket/basket-pill': '#basket-pill-wrapper'
 		    }
 		});
 	    }
