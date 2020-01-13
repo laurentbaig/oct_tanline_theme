@@ -4,11 +4,9 @@ layout = "basic"
 is_hidden = 0
 
 [Basket]
-==
-{#
-{% set obShippingTypeList = ShippingTypeList.make().sort().active() %}
-#}
 
+[Order]
+==
 <h1 class="text-center">Checkout</h1>
 <div class="flex flex-wrap">
     <div class="w-full md:w-1/2 p-2">
@@ -21,7 +19,7 @@ is_hidden = 0
 	    <div class="card-body-form py-2 font-sans">
 		<form>
 		    <div class="form-control">
-			<input type="email" id="email">
+			<input type="email" id="email" autocomplete="email">
 		    </div>
 		    <div class="text-gray-600 text-xs">
 			You'll receive receipts and notifications at this email address
@@ -55,31 +53,25 @@ is_hidden = 0
 			</div>
 			{% endif %}
 			#}
-			<div class="form-control w-full md:w-1/2">
-			    <input type="text" id="first" placeholder="First Name" required>
-			</div>
-			<div class="form-control w-full md:w-1/2">
-			    <input type="text" id="last" placeholder="Last Name" required>
+			<div class="form-control w-full">
+			    <input type="text" id="addressee" placeholder="Addressee, e.g. Harry Potter" required autocomplete="name">
 			</div>
 			<div class="form-control w-full">
-			    <input type="text" id="address1" placeholder="Address 1" required>
+			    <input type="text" id="street" placeholder="Street" required autocomplete="street-address">
 			</div>
 			<div class="form-control w-full">
-			    <input type="text" id="address2" placeholder="Address 2">
+			    <input type="text" id="city" placeholder="City" required autocomplete="address-level2">
 			</div>
 			<div class="form-control w-full">
-			    <input type="text" id="city" placeholder="City" required>
-			</div>
-			<div class="form-control w-full">
-			    <select id="state">
+			    <select id="state" autocomplete="address-level1">
 				{% partial 'state_options' %}
 			    </select>
 			</div>
 			<div class="form-control w-full">
-			    <input type="text" id="zip" placeholder="ZIP Code" required>
+			    <input type="text" id="zip" placeholder="ZIP Code" required autocomplete="postal-code">
 			</div>
 			<div class="form-control w-full">
-			    <input type="tel" id="phone" placeholder="Phone Number" required>
+			    <input type="tel" id="phone" placeholder="Phone Number" required autocomplete="tel">
 			</div>
 		    </div>
 		    <button class="w-full" disabled>continue</button>
@@ -116,32 +108,5 @@ is_hidden = 0
 </div>
 
 {% put page_scripts %}
-<script src="https://www.paypal.com/sdk/js?client-id=ASx3OIVkSlsRVWtrYHEr1MYvjFwfYkKyxwsrrxwZpwBolYkSRtgofGVikVrFcSX5OcEfPRx0BjpcL3TJ&currency=USD" data-sdk-integration-source="button-factory"></script>
-{#
-<script>
- paypal.Buttons({
-     style: {
-	 shape: 'rect',
-	 color: 'blue',
-	 layout: 'vertical',
-	 label: 'paypal',
-	 
-     },
-     createOrder: function(data, actions) {
-	 return actions.order.create({
-	     purchase_units: [{
-		 amount: {
-		     value: '.01'
-		 }
-	     }]
-	 });
-     },
-     onApprove: function(data, actions) {
-	 return actions.order.capture().then(function(details) {
-	     alert('Transaction completed by ' + details.payer.name.given_name + '!');
-	 });
-     }
- }).render('#paypal-button-container');
-</script>
-#}
+<script src="https://www.paypal.com/sdk/js?client-id=AWT7qPw5dl3PhxNTy3Up3E4AWpnwdxvTzrN7bZoE7ZIqS6Zn98xHG60MeInND-KsEgvp1F0QyM62__rC&currency=USD" data-sdk-integration-source="button-factory"></script>
 {% endput %}

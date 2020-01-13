@@ -1,0 +1,7 @@
+{% set obBasket = Basket.get() %}
+{% set obBasketItems = obBasket.items %}
+{% if obBasketItems.isNotEmpty() %}
+<div class="text-right py-4">
+    <a class="btn btn-lg text-lg " href="{{ 'checkout'|page }}">Checkout</a>
+</div>
+{% endif %}

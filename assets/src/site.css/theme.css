@@ -18,3 +18,29 @@ h1, h2, h3, h4, h5, h6 {
 #footer {
     height: 0;
 }
+
+#free-shipping-mobile {
+    background-color: #6DC9CC;
+}
+#free-shipping-desktop {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    #free-shipping-mobile {
+	display: none;
+    }
+    #free-shipping-desktop {
+	background-color: #6DC9CC;
+	display: block;
+	//left: 50px;
+	position: absolute;
+	top: 212px;
+	text-align: center;
+	//transform: translateY(50%) translateX(-50%) rotate(-45deg);
+	transform: translate(-28px, -28px) rotate(-45deg);
+	transform-origin: top left;
+	padding: 4px 32px;
+	width: 300px;
+    }
+}

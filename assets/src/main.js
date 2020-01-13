@@ -9,6 +9,13 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
+var xhrProto = XMLHttpRequest.prototype,
+    origOpen = xhrProto.open;
+
+xhrProto.open = function (method, url) {
+    this._url = url;
+    return origOpen.apply(this, arguments);
+};
 
 window.addEventListener('load', function() {
     // mobile menu button
@@ -105,7 +112,8 @@ window.addEventListener('load', function() {
 		    data: data,
 		    update: {
 			'basket/basket-item-list': '#basket-item-wrapper',
-			'basket/basket-pill': '#basket-pill-wrapper'
+			'basket/basket-pill': '#basket-pill-wrapper',
+			'basket/basket-checkout-button': '#basket-checkout-button'
 		    }
 		});
 	    }
@@ -121,7 +129,8 @@ window.addEventListener('load', function() {
 		    },
 		    update: {
 			'basket/basket-item-list': '#basket-item-wrapper',
-			'basket/basket-pill': '#basket-pill-wrapper'
+			'basket/basket-pill': '#basket-pill-wrapper',
+			'basket/basket-checkout-button': '#basket-checkout-button'
 		    }
 		});
 	    }
@@ -174,18 +183,17 @@ window.addEventListener('load', function() {
     if (getShipping) {
 	getShipping.addEventListener('input', function(e) {
 	    e.preventDefault();
-	    let first = getShipping.querySelector("#first").value;
-	    let last = getShipping.querySelector("#last").value;
-	    let address1 = getShipping.querySelector("#address1").value;
-	    let address2 = getShipping.querySelector("#address2").value;
+	    let addressee = getShipping.querySelector("#addressee").value;
+	    let street = getShipping.querySelector("#street").value;
 	    let city = getShipping.querySelector("#city").value;
 	    let state = getShipping.querySelector("#state").value;
 	    let zip = getShipping.querySelector("#zip").value;
 	    let phone = getShipping.querySelector('#phone').value;
-	    let shipping = getShipping.querySelector('#shipping-type').value;
-	    if (first.length > 0 && last.length > 0 && address1.length > 0
+	    // let shipping = getShipping.querySelector('#shipping-type').value;
+	    if (addressee.length > 0 && street.length > 0
 		&& city.length > 0 && zip.length > 0 && state.length > 0
-		&& phone.length > 0 && shipping > 0) {
+		&& phone.length > 0 // && shipping > 0
+	       ) {
 		getShipping.querySelector('button').disabled = false;
 	    } else {
 		getShipping.querySelector('button').disabled = true;
@@ -194,9 +202,11 @@ window.addEventListener('load', function() {
 	    if (e.target.matches('#shipping-type')) {
 		request.sendData('Cart::onSetShippingType', {
 		    data: { 'shipping_type_id': e.target.value },
+		    /*
 		    success: function(response) {
 			console.log(response);
 		    },
+		    */
 		    update: {
 			'cart/cart-item-summary': '.order-summary > .card-body'
 		    }
@@ -214,18 +224,16 @@ window.addEventListener('load', function() {
 		document.querySelector('#get-payment .card-body').classList.add('hidden');
 	    }
 	    else if (e.target.matches('button')) {
-		let first = getShipping.querySelector("#first").value;
-		let last = getShipping.querySelector("#last").value;
-		let address1 = getShipping.querySelector("#address1").value;
-		let address2 = getShipping.querySelector("#address2").value;
+		let addressee = getShipping.querySelector("#addressee").value;
+		let street = getShipping.querySelector("#street").value;
 		let city = getShipping.querySelector("#city").value;
 		let state = getShipping.querySelector("#state").value;
 		let zip = getShipping.querySelector("#zip").value;
 		let phone = getShipping.querySelector('#phone').value;
-		let shipping = getShipping.querySelector('#shipping-type').value;
-		let result=`<div>${first} ${last}</div>`
-		    + `<div>${address1}</div>`
-		    + `<div>${address2}</div>`
+		let email = document.querySelector('#email').value;
+		//let shipping = getShipping.querySelector('#shipping-type').value;
+		let result=`<div>${addressee}</div>`
+		    + `<div>${street}</div>`
 		    + `<div>${city}, ${state}, ${zip}</div>`
 		    + `<div>${phone}</div>`;
 		getShipping.querySelector('.result').innerHTML = result;
@@ -235,7 +243,7 @@ window.addEventListener('load', function() {
 		let totalPrice = document.querySelector('.order-summary .total-amount').innerHTML;
 
 		// create the paypal button
-		console.log('make button!');
+		//console.log('make button!');
 		document.querySelector('#paypal-button-container').innerHTML = '';
 		paypal.Buttons({
 		    style: {
@@ -246,6 +254,8 @@ window.addEventListener('load', function() {
 			
 		    },
 		    createOrder: function(data, actions) {
+			// disable button?
+			//document.querySelector('#get-payment').disabled = true;
 			return actions.order.create({
 			    purchase_units: [{
 				amount: {
@@ -255,33 +265,33 @@ window.addEventListener('load', function() {
 			});
 		    },
 		    onApprove: function(data, actions) {
+			//console.log(data);
+			//console.log(actions);
 			return actions.order.capture().then(function(details) {
 			    let data = {
 				order: {
-				    'payment_method_id': 0,
-				    'shipping_type_id': shipping,
-				    'shipping_price': document.querySelector('.order-summary .shipping-amount').innerHTML,
-				    'property': {
+				    payment_method_id: 0,
+				    //'shipping_type_id': shipping,
+				    //'shipping_price': document.querySelector('.order-summary .shipping-amount').innerHTML,
+				    email: email,
+				    phone: phone,
+				    shipping_address: {
+					addressee,
+					street,
+					city,
+					state,
+					postcode: zip
 				    },
 				},
-				shipping_address: {
-				    address1,
-				    address2,
-				    city,
-				    state,
-				    postcode: zip
-				},
-				user: {
-				    'name': first,
-				    'last_name': last,
-				    'email': document.querySelector('#get-email input[type=email]').value,
-				    'phone': phone,
-				}
 			    };
-			    request.sendData('MakeOrder::onCreate', {
-				'data': data
+			    request.sendData('Order::onCreate', {
+				data: data,
+				update: {},
+				success: function() {
+				    window.location = '/thank-you';
+				}
 			    });
-			    //alert('Transaction completed by ' + details.payer.name.given_name + '!');
+
 			});
 		    }
 		}).render('#paypal-button-container');

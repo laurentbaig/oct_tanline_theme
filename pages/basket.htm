@@ -9,8 +9,8 @@ is_hidden = 0
     <div id="basket-item-wrapper">
     {% partial 'basket/basket-item-list' %}
     </div>
-    <div class="text-right py-4">
-	<a class="btn btn-lg text-lg " href="{{ 'checkout'|page }}">Checkout</a>
+    <div id="basket-checkout-button">
+    {% partial 'basket/basket-checkout-button' %}
     </div>
 </div>
 

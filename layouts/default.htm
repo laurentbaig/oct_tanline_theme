@@ -55,12 +55,14 @@ code = "main-menu"
 
 
 	<!-- Shopping basket pill -->
-	{% if Basket.exists() %}
 	<div id="basket-pill-wrapper">
 	    {% partial 'basket/basket-pill' %}
 	</div>
-	{% endif %}
 
+	<div id="free-shipping-desktop">
+	    Free shipping!
+	</div>
+	
 	<!-- main layout -->
 	<div class="container mx-auto">
 	    <header id="header">
@@ -79,8 +81,11 @@ code = "main-menu"
 		</nav>
 
 	    </header>
+	<div id="free-shipping-mobile" class="text-center">
+	    Free shipping!
+	</div>
 
-	    <div class="p-4"></div>
+	    <div class="p-1"></div>
 
 	    <section id="page" role="main" data-content-field="main-content">
 		{% page %}

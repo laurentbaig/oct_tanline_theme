@@ -1,5 +1,7 @@
 {% set obBasket = Basket.get() %}
 {% set obBasketItems = obBasket.items %}
+{% set taxvalue = 0 %}
+{% set shippingvalue = 0 %}
 
 {% if obBasketItems.isNotEmpty() %}
 <div class="flex flex-row flex-nowrap">
@@ -29,6 +31,7 @@
 <div class="border border-gray-300 my-2"></div>
 {% endfor %}
 
+{% set subtotal = Basket.getBasketSubtotal() %}
 <div class="text-gray-500">
     <div class="inline-block">Subtotal</div>
     <div class="inline-block float-right text-right">
@@ -36,6 +39,24 @@
     </div>
 </div>
 
+<div class="text-gray-500">
+    <div class="inline-block">Tax</div>
+    <div class="inline-block float-right text-right">
+	<span class="tax-amount">${{ taxvalue|number_format(2) }}</span>
+    </div>
+</div>
+<div class="text-gray-500">
+    <div class="inline-block">Shipping {% if obShippingType %}({{ obShippingType.name }}){% endif %}</div>
+    <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
+	<span class="shipping-amount">{{ shippingvalue|number_format(2) }}</span>
+    </div>
+</div>
+<div class="text-gray-500">
+    <div class="inline-block">Total</div>
+    <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
+	<span class="total-amount">{{ (subtotal+taxvalue+shippingvalue)|number_format(2) }}</span>
+    </div>
+</div>
 {% else %}
 <div>Basket is empty</div>
 
