@@ -4,7 +4,10 @@ layout = "default"
 is_hidden = 0
 ==
 <div class="w-1/2 mx-auto">
-    <form id="contact-form">
+    <div id="contact-form-loader" class="text-center">
+	<div class="lds-heart"><div></div></div>
+    </div>
+    <form id="contact-form" style="opacity: 0; transition: .3s all ease-in">
 	<h2>Send us a message!</h2>
 	<div id="contact-status"></div>
 	<div class="form-control my-4">
@@ -20,3 +23,15 @@ is_hidden = 0
     </form>
 </div>
 
+{% put page_scripts %}
+<script src="https://www.google.com/recaptcha/api.js?render=6LeTnMkUAAAAAAw7J68IrLMkPq7Lzkq444FRyiTa"></script>
+{#
+<script>
+ grecaptcha.ready(function() {
+     grecaptcha.execute('6LeTnMkUAAAAAAw7J68IrLMkPq7Lzkq444FRyiTa', {action: 'homepage'}).then(function(token) {
+	 ...
+     });
+ });
+ #}
+</script>
+{% endput %}
