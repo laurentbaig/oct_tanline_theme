@@ -29,12 +29,12 @@ window.addEventListener('load', function() {
 	});
     }
 
-    window.grecaptcha.ready(function() {
-	let grecaptcha = window.grecaptcha;
+    // contact form
+    let contact_form = document.querySelector("#contact-form");
+    if (contact_form) {
+	window.grecaptcha.ready(function() {
+	    let grecaptcha = window.grecaptcha;
 	
-	// contact form
-	let contact_form = document.querySelector("#contact-form");
-	if (contact_form) {
 	    let contact_form_loader = document.querySelector("#contact-form-loader");
 	    contact_form_loader.style.display = 'none';
 	    contact_form.style.opacity=1;
@@ -79,8 +79,8 @@ window.addEventListener('load', function() {
 		    });
      		return false;
 	    });
-	}
-    });
+	});
+    }
 
     // add products to cart
     let product_panels = document.querySelectorAll('.product-panel');
