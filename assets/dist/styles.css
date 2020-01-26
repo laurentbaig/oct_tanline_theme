@@ -11416,6 +11416,10 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
 }
 
+#header {
+  padding-bottom: 25px;
+}
+
 #footer {
   height: 0;
 }
@@ -11434,7 +11438,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   #free-shipping-desktop {
-    background-color: #6DC9CC;
+    //background-color: #6DC9CC;
+    background-color: #EABB60;
+    font-size: 1.4rem;
     display: block;
     //left: 50px;
     position: absolute;
@@ -11522,6 +11528,12 @@ button, .btn {
   height: 0;
 }
 
+.main-nav {
+  padding-top: 23px;
+  margin-bottom: 17px;
+  font-size: 1.4rem;
+}
+
 .main-nav ul > li {
   text-align: center;
   -webkit-box-flex: 1;
@@ -11530,10 +11542,15 @@ button, .btn {
   color: #718096;
   -webkit-transition: color .3s ease-in-out;
   transition: color .3s ease-in-out;
+  padding-top: 2px;
 }
 
 .main-nav ul > li:hover {
   color: #2d3748;
+}
+
+.main-nav ul > li.active > a {
+  border-bottom: 4px solid #6DC9CC;
 }
 
 .project-container {
@@ -11662,6 +11679,103 @@ body {
     border-radius: 9999px;
     min-width: 250px;
   }
+}
+
+#page .static-container {
+  margin: 0 auto;
+  max-width: 640px;
+  width: 66%;
+}
+
+.static-container h1 {
+  font-size: 2rem;
+  line-height: 50px;
+  margin-bottom: 11px;
+  padding-top: 14px;
+}
+
+.static-container h2 {
+  font-size: 1.5rem;
+  line-height: 25px;
+  margin-bottom: 21px;
+  padding-top: 4px;
+}
+
+.static-container h3 {
+  font-size: 1.3rem;
+  line-height: 25px;
+  margin-bottom: 20px;
+  padding-top: 5px;
+}
+
+.static-container h4 {
+  font-size: 1.3rem;
+  line-height: 25px;
+  margin-bottom: 20px;
+  padding-top: 5px;
+}
+
+.static-container p {
+  line-height: 25px;
+  margin-bottom: 18px;
+  padding-top: 7px;
+}
+
+.static-container hr {
+  margin-bottom: 24px;
+}
+
+.static-container p img {
+  margin: 0 auto;
+}
+
+.static-container ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+  padding-left: 1rem;
+}
+
+.static-container ol li {
+  line-height: 25px;
+}
+
+.static-container ol li:first-child {
+  padding-top: 7px;
+}
+
+.static-container ol li:last-child {
+  margin-bottom: 18px;
+}
+
+.static-container ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.static-container ul li {
+  line-height: 25px;
+}
+
+.static-container ul li:first-child {
+  padding-top: 7px;
+}
+
+.static-container ul li:last-child {
+  margin-bottom: 18px;
+}
+
+.static-container a {
+  color: #6DC9CC;
+}
+
+.static-container blockquote {
+  border-left: 10px solid #6DC9CC;
+  font-style: italic;
+  padding: 25px 25px 0;
+}
+
+.static-container blockquote p:last-child {
+  padding-bottom: 25px;
 }
 
 .max-height-0 {

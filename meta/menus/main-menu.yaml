@@ -2,13 +2,11 @@ name: 'Main Menu'
 items:
     -
         title: Home
-        nesting: ''
-        type: cms-page
-        url: ''
+        nesting: '0'
+        type: static-page
         code: ''
-        reference: home
-        cmsPage: ''
-        replace: ''
+        reference: newhome
+        replace: '0'
         viewBag:
             isHidden: '0'
             cssClass: ''
@@ -28,9 +26,13 @@ items:
             isExternal: '0'
     -
         title: 'Tiny Town Times'
+        nesting: ''
         type: cms-page
+        url: ''
         code: ''
         reference: tiny-town-times
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
             cssClass: ''

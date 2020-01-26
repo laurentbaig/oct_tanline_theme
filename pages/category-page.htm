@@ -13,6 +13,7 @@ slug = "{{ :slug }}"
 {# Get category item #}
 {% set obCategory = CategoryItem.get() %}
 
+{#
 {% set arBreadcrumbs = Breadcrumbs.getFromCategory(obCategory) %}
 {% if arBreadcrumbs|length > 0 %}
 <div class="w-11/12 mx-auto">
@@ -30,6 +31,7 @@ slug = "{{ :slug }}"
     {% endfor %}
 </ul>
 {% endif %}
+#}
 
 {% if obCategory.subcategories.isNotEmpty() %}
 <h2>Subcategories</h2>

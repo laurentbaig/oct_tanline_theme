@@ -8,7 +8,6 @@ is_hidden = 0
 [ProductList]
 ==
 <div class="w-11/12 mx-auto">
-    <h1 class="uppercase text-4xl text-center">Shop</h1>
     {% set obCategoryList = CategoryList.getRootCategories() %}
     {% partial 'catalog/categories' categories=obCategoryList %}
 </div>

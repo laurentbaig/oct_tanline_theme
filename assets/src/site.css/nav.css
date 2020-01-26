@@ -17,11 +17,22 @@
 	height: 0;
 }
 
+.main-nav {
+    padding-top: 23px;
+    margin-bottom: 17px;
+    font-size: 1.4rem;
+}
+
 .main-nav ul > li {
     @apply text-center flex-1 font-hairline text-gray-600;
     transition: color .3s ease-in-out;
+    padding-top: 2px;
 }
 
 .main-nav ul > li:hover {
     @apply text-gray-800;
+}
+
+.main-nav ul > li.active > a {
+    border-bottom: 4px solid #6DC9CC;
 }

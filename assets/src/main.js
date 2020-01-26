@@ -50,7 +50,7 @@ window.addEventListener('load', function() {
 		    statusbox.innerHTML = '<p class="text-red-600">Your message failed to send. Please contact the administrator.</p>';
 		}
 	    });
-	    xhr.open('POST', 'http://tanline.test/tanline/contact-form');
+	    xhr.open('POST', '/tanline/contact-form');
 	    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	    xhr.send(JSON.stringify({
 		name: name,

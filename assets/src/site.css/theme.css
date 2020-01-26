@@ -15,6 +15,10 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
 }
 
+#header {
+    padding-bottom: 25px;
+}
+
 #footer {
     height: 0;
 }
@@ -31,7 +35,9 @@ h1, h2, h3, h4, h5, h6 {
 	display: none;
     }
     #free-shipping-desktop {
-	background-color: #6DC9CC;
+	//background-color: #6DC9CC;
+	background-color: #EABB60;
+	font-size: 1.4rem;
 	display: block;
 	//left: 50px;
 	position: absolute;

@@ -2,6 +2,8 @@
 code = "main-menu"
 
 [Basket]
+
+[staticPage]
 ==
 <!DOCTYPE html>
 <html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en-US" >
@@ -35,6 +37,9 @@ code = "main-menu"
 
 	<!-- load in our stylesheet -->
 	<link rel="stylesheet" type="text/css" href="{{ 'assets/dist/styles.css'|theme }}">
+	{#
+	<link rel="stylesheet" href="//basehold.it/25">
+	#}
     </head>
 
     <body class="relative">
@@ -72,15 +77,16 @@ code = "main-menu"
 
 		{% partial 'nav' %}
 	    </header>
-	<div id="free-shipping-mobile" class="text-center">
-	    Free shipping!
-	</div>
 
-	    <div class="p-1"></div>
+	    <div id="free-shipping-mobile" class="text-center">
+		Free shipping!
+	    </div>
 
-	    <section id="page" role="main" data-content-field="main-content">
-		{% page %}
 
+	    <section id="page" role="main" data-content-field="main-content" class="static">
+		<div class="static-container">
+		    {% page %}
+		</div>
 	    </section>
 
 	    <div class="p-4"></div>

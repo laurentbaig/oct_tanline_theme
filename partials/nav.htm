@@ -1,0 +1,10 @@
+<nav class="main-nav">
+    <ul class="flex justify-around">
+	{% for item in mainMenu.menuItems %}
+	<li {% if item.isActive %}class="active"{% endif %}>
+	    <a href="{{ item.url }}">{{ item.title }}</a>
+	</li>
+	{% endfor %}
+    </ul>
+</nav>
+

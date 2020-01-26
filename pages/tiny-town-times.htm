@@ -5,23 +5,34 @@ is_hidden = 0
 
 [LatestPublished]
 ==
-<h1 class="text-center text-2xl">{{ this.page.title }}</h1>
+<style>
+ .canvas-container {
+     height: 90vh;
+ }
+ #the-canvas {
+     height: 90vh;
+     width: 70vh;
+ }
+</style>
 
+<div class="canvas-container flex items-stretch text-black">
+    <div class="flex-1 text-right">
+	<button id="prev" class="h-full"><</button>
+    </div>
+    <canvas id="the-canvas"></canvas>
+    <div class="flex-1">
+	<button id="next" class="h-full">></button>
+    </div>
+</div>
+
+{#
 <div class="text-center">
     <button id="prev">Previous</button>
     <button id="next">Next</button>
     &nbsp; &nbsp;
     <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
 </div>
-<div class="py-2"></div>
-
-<style>
- #the-canvas {
-     height: 90vh;
-     width: 70vh;
- }
-</style>
-<canvas id="the-canvas" class="mx-auto"></canvas>
+#}
 
 
 {% put page_scripts %}
@@ -76,7 +87,7 @@ is_hidden = 0
      });
 
      // Update page counters
-     document.getElementById('page_num').textContent = num;
+     //document.getElementById('page_num').textContent = num;
  }
 
  /**
@@ -120,7 +131,7 @@ is_hidden = 0
   */
  pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
      pdfDoc = pdfDoc_;
-     document.getElementById('page_count').textContent = pdfDoc.numPages;
+     //document.getElementById('page_count').textContent = pdfDoc.numPages;
 
      // Initial/first page rendering
      renderPage(pageNum);
