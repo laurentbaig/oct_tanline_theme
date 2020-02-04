@@ -32,54 +32,57 @@ window.addEventListener('load', function() {
     // contact form
     let contact_form = document.querySelector("#contact-form");
     if (contact_form) {
-	window.grecaptcha.ready(function() {
-	    let grecaptcha = window.grecaptcha;
-	
-	    let contact_form_loader = document.querySelector("#contact-form-loader");
-	    contact_form_loader.style.display = 'none';
-	    contact_form.style.opacity=1;
+	let recaptcha_site_key = document.querySelector("#recaptcha-site-key");
+	if (recaptcha_site_key) {
+	    window.grecaptcha.ready(function() {
+		let grecaptcha = window.grecaptcha;
+		
+		let contact_form_loader = document.querySelector("#contact-form-loader");
+		contact_form_loader.style.display = 'none';
+		contact_form.style.opacity=1;
 
-	    contact_form.addEventListener("submit", (e) => {
-     		if (e.preventDefault) e.preventDefault();
+		contact_form.addEventListener("submit", (e) => {
+     		    if (e.preventDefault) e.preventDefault();
 
-		let name = e.target.querySelector("input[name=name]").value;
-		let email = e.target.querySelector("input[name=email]").value;
-		let msg = e.target.querySelector("textarea").value;
-		let statusbox = document.querySelector("#contact-status");
+		    let name = e.target.querySelector("input[name=name]").value;
+		    let email = e.target.querySelector("input[name=email]").value;
+		    let msg = e.target.querySelector("textarea").value;
+		    let statusbox = document.querySelector("#contact-status");
 
-		if (msg.length == 0) {
-		    statusbox.innerHTML = '<p class="text-red-600">Please enter a message to send</p>';
-		}
-		// hide the button
-		document.querySelector("#submit-email-button").style.display = 'none';
+		    if (msg.length == 0) {
+			statusbox.innerHTML = '<p class="text-red-600">Please enter a message to send</p>';
+		    }
+		    // hide the button
+		    document.querySelector("#submit-email-button").style.display = 'none';
 
-		// do the recaptcha
-		grecaptcha.execute(
-		    '6LeTnMkUAAAAAAw7J68IrLMkPq7Lzkq444FRyiTa',
-		    {action: 'contact_submit'}).then(function(token) {
-			let xhr = new XMLHttpRequest();
-			xhr.addEventListener('load', (e) => {
-			    if (xhr.status >= 200 && xhr.status < 300) {
-				let response = JSON.parse(xhr.response);
-				if (response['status'] == 'ok') {
-				    statusbox.innerHTML = '<p class="text-green-600">Your message has been sent<p>';
-				} else {
-				    statusbox.innerHTML = '<p class="text-red-600">Your message failed to send. Please contact the administrator.</p>';
+		    // do the recaptcha
+		    grecaptcha.execute(
+			recaptcha_site_key.value,
+			{action: 'contact_submit'}).then(function(token) {
+			    let xhr = new XMLHttpRequest();
+			    xhr.addEventListener('load', (e) => {
+				if (xhr.status >= 200 && xhr.status < 300) {
+				    let response = JSON.parse(xhr.response);
+				    if (response['status'] == 'ok') {
+					statusbox.innerHTML = '<p class="text-green-600">Your message has been sent<p>';
+				    } else {
+					statusbox.innerHTML = '<p class="text-red-600">Your message failed to send. Please contact the administrator.</p>';
+				    }
 				}
-			    }
+			    });
+			    xhr.open('POST', '/tanline/contact');
+			    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+			    xhr.send(JSON.stringify({
+				name: name,
+				email: email,
+				message: msg,
+				recaptcha: token
+			    }));
 			});
-			xhr.open('POST', '/tanline/contact');
-			xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-			xhr.send(JSON.stringify({
-			    name: name,
-			    email: email,
-			    message: msg,
-			    recaptcha: token
-			}));
-		    });
-     		return false;
+     		    return false;
+		});
 	    });
-	});
+	}
     }
 
     // add products to cart

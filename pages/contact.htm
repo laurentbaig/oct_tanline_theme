@@ -3,12 +3,22 @@ url = "/contact"
 layout = "default"
 is_hidden = 0
 ==
+<?php
+
+function onStart()
+{
+    $this['recaptcha_site_key'] = \Lbaig\Tanline\Models\Settings::get('recaptcha_site_key');
+}
+
+?>
+==
 <div class="w-1/2 mx-auto">
     <div id="contact-form-loader" class="text-center">
 	<div class="lds-heart"><div></div></div>
     </div>
     <form id="contact-form" style="opacity: 0; transition: .3s all ease-in">
 	<h2>Send us a message!</h2>
+	<input type="hidden" id="recaptcha-site-key" value="{{ recaptcha_site_key }}">
 	<div id="contact-status"></div>
 	<div class="form-control my-4">
 	    <input type="text" name="name" placeholder="Your name" required>
