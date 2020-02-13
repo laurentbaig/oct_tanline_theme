@@ -255,6 +255,7 @@ window.addEventListener('load', function() {
 		let zip = getShipping.querySelector("#zip").value;
 		let phone = getShipping.querySelector('#phone').value;
 		let email = document.querySelector('#email').value;
+		let basketId = document.querySelector("#basket-id").value;
 		//let shipping = getShipping.querySelector('#shipping-type').value;
 		let result=`<div>${addressee}</div>`
 		    + `<div>${street}</div>`
@@ -294,6 +295,7 @@ window.addEventListener('load', function() {
 			return actions.order.capture().then(function(details) {
 			    let data = {
 				order: {
+				    basket_id: basketId,
 				    payment_method_id: 0,
 				    //'shipping_type_id': shipping,
 				    //'shipping_price': document.querySelector('.order-summary .shipping-amount').innerHTML,
@@ -308,14 +310,34 @@ window.addEventListener('load', function() {
 				    },
 				},
 			    };
+			    let xhr = new XMLHttpRequest();
+			    xhr.addEventListener('load', (e) => {
+				if (xhr.status >= 200 && xhr.status < 300) {
+				    let response = JSON.parse(xhr.response);
+				    if (response['status'] == 'ok') {
+					window.location = '/thank-you';
+				    }
+				}
+				else {
+				    console.log(xhr);
+				}
+			    });
+			    xhr.open('POST', '/tanline/order-complete');
+			    xhr.setRequestHeader(
+				"Content-Type",
+				"application/json;charset=UTF-8"
+			    );
+			    xhr.send(JSON.stringify(data));
+			    /*
 			    request.sendData('Order::onCreate', {
 				data: data,
 				update: {},
 				success: function() {
+				    console.log('success');
 				    window.location = '/thank-you';
 				}
 			    });
-
+			    */
 			});
 		    }
 		}).render('#paypal-button-container');
