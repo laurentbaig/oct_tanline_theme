@@ -1,0 +1,53 @@
+title = "Gallery"
+url = "/gallery/:itemid?0"
+layout = "default"
+is_hidden = 0
+
+[galleryList]
+category = "art-exhibitions"
+
+[galleryItem]
+itemid = {{ :itemid }}
+==
+<style>
+ .description p {
+     padding-bottom: .5rem;
+ }
+</style>
+
+<div class="w-11/12 mx-auto flex flex-row items-stretch h-full">
+    <div class="px-4" style="flex: 3">
+	<h2 class="text-2xl font-bold">
+	    {{ galleryItem.item.name|split('|')[0]|trim }}
+	</h2>
+	<span>
+	    {{ galleryItem.item.name|split('|')[1]|trim }}
+	</span>
+	{% if galleryItem.item.image %}
+	{% set image = galleryItem.item.image %}
+	<div class="pb-4">
+	    <img class="mx-auto" src="{{ image.path }}"
+		 title="{{ image.title }}"
+		 alt="{{ image.description }}">
+	</div>
+	{% endif %}
+	<div class="description">
+	    {{ galleryItem.item.description|raw }}
+	</div>
+    </div>
+    <div style="flex: 1; border-left: 1px solid #aaa; padding-left: 20px">
+	<div>
+	    <ul>
+		{% for ev in galleryList.events %}
+		<li class="px-2 py-2 hover:bg-gray-200">
+		    <a href="{{ 'gallery'|page({itemid: ev.id})}}">
+		    <span class="text-xl font-semibold">{{ ev.name|split('|')[0]|trim }}</span>
+		    <br>
+		    <span>{{ ev.name|split('|')[1]|trim }}</span>
+		    </a>
+		</li>
+		{% endfor %}
+	    </ul>
+	</div>
+    </div>
+</div>

@@ -4,8 +4,10 @@ items:
         title: Home
         nesting: '0'
         type: static-page
+        url: ''
         code: ''
         reference: newhome
+        cmsPage: ''
         replace: '0'
         viewBag:
             isHidden: '0'
@@ -20,6 +22,15 @@ items:
         reference: shop
         cmsPage: ''
         replace: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Gallery Shows'
+        type: cms-page
+        code: ''
+        reference: gallery
         viewBag:
             isHidden: '0'
             cssClass: ''
