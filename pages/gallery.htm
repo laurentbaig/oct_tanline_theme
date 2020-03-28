@@ -20,12 +20,15 @@ itemid = {{ :itemid }}
 	<h2 class="text-2xl font-bold">
 	    {{ galleryItem.item.name|split('|')[0]|trim }}
 	</h2>
-	<span>
+	<span class="text-lg">
 	    {{ galleryItem.item.name|split('|')[1]|trim }}
+	</span><br>
+	<span class="text-sm">
+	    {{ galleryItem.item.start_date|date('F, Y') }}
 	</span>
 	{% if galleryItem.item.image %}
 	{% set image = galleryItem.item.image %}
-	<div class="pb-4">
+	<div class="py-8">
 	    <img class="mx-auto" src="{{ image.path }}"
 		 title="{{ image.title }}"
 		 alt="{{ image.description }}">
