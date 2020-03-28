@@ -27,7 +27,7 @@ items:
             cssClass: ''
             isExternal: '0'
     -
-        title: 'Gallery Shows'
+        title: 'Gallery Exhibitions'
         type: cms-page
         code: ''
         reference: gallery
