@@ -3,6 +3,33 @@ code = "main-menu"
 
 [Basket]
 ==
+<?php
+function onDownlodPDFDetailsVehicle3()
+    {
+      try{
+        // Load the template
+        $template = File::get(plugins_path('imt/gammamemberengine/components/views/pdf.htm'));
+      
+        // Render the template
+        $renderedHtml = Twig::parse($template);
+    
+        // Render as a PDF
+        $pdf = SnappyPDF::loadHTML($renderedHtml)->output();
+  
+     
+        return Response::make($pdf, 200, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Transfer-Encoding' => 'binary',
+            'Content-Disposition' => "attachment; filename=\"test.pdf\"",
+        ]);
+    } catch (Exception $ex) {
+        return [
+            '#swal' => $this->renderPartial('alerts/swal', ["swalType" => "error", "swalMsgTitle" => "Process Error", "swalMsgText" => $ex->getMessage()]),
+        ];
+    }
+}
+?>
+==
 <!DOCTYPE html>
 <html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en-US" >
 

@@ -39,7 +39,6 @@ slug = "{{ :slug }}"
 {% endif %}
 
 {% if obCategory.nestedCount > 0 %}
-<h2>Products</h2>
 <div>{{ obCategory.description|raw }}</div>
 {% partial 'catalog/products' category=obCategory %}
 {% endif %}
