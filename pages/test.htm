@@ -1,0 +1,45 @@
+title = "test"
+url = "/test"
+layout = "test"
+is_hidden = 0
+==
+<?php
+function onButtonClick()
+{
+    \Log::info('button clicked');
+    $order = \Lbaig\Basket\Models\Order::find(1);
+    $order->load('items');
+    $order->load('items.product');
+    $vars = ['name' => $order->address->name, 'order' => $order, 'items' => [] ];
+    
+    $total = 0.0;
+    foreach ($order->items as $item) {
+        $detail = [
+            'name' => $item->product->name,
+            'options' => $item->propertyOptions,
+            'quantity' => $item->quantity,
+            'unit_price' => number_format($item->productPrice, 2),
+            'line_price' => number_format($item->quantity * $item->productPrice, 2)
+        ];
+        $vars['items'][] = $detail;
+        $total = $total + $detail['line_price'];
+    }
+    $vars['total'] = number_format($total, 2);
+    Mail::send('order::mail.thank-you', $vars, function ($msg) { $msg->to('ljb0904@gmail.com');  });
+}
+?>
+==
+<h1>test</h1>
+<button data-request="onButtonClick">Press Me</button>
+
+<script>
+/*
+window.addEventListener('load', function() {
+    let btn = document.querySelector("#thisbutton");
+    btn.addEventListener('click', function() {
+        // console.log('clicked!');
+        request.sendData('onButtonClicked');
+    });
+});
+*/
+</script>
