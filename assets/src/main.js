@@ -265,7 +265,9 @@ window.addEventListener('load', function() {
 		getShipping.querySelector('form').classList.add('hidden');
 		getShipping.querySelector('.edit-button').classList.remove('hidden');
 		document.querySelector('#get-payment .card-body').classList.remove('hidden');
+		let subTotal = document.querySelector('.order-summary .subtotal').innerHTML;
 		let totalPrice = document.querySelector('.order-summary .total-amount').innerHTML;
+		let taxAmount = document.querySelector('.order-summary .tax-amount').innerHTML;
 
 		// create the paypal button
 		//console.log('make button!');
@@ -299,6 +301,9 @@ window.addEventListener('load', function() {
 				    payment_method_id: 0,
 				    //'shipping_type_id': shipping,
 				    //'shipping_price': document.querySelector('.order-summary .shipping-amount').innerHTML,
+				    subtotal: subTotal,
+				    tax_amount: taxAmount,
+				    total_price: totalPrice,
 				    email: email,
 				    phone: phone,
 				    shipping_address: {

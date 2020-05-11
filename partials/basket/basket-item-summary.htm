@@ -1,7 +1,9 @@
 {% set obBasket = Basket.get() %}
 {% set obBasketItems = obBasket.items %}
-{% set taxvalue = 0 %}
+{% set subtotal = Basket.getBasketSubtotal() %}
+{% set taxvalue = Basket.getTaxable() %}
 {% set shippingvalue = 0 %}
+{% set total = subtotal + taxvalue + shippingvalue %}
 
 {% if obBasketItems.isNotEmpty() %}
 <input type="hidden" id="basket-id" value="{{ obBasket.id }}">
@@ -26,24 +28,23 @@
     </div>
     <div class="flex-1 text-right">{{ obBasketItem.quantity }}</div>
     <div class="flex-1 text-right">
-	${{ Basket.getItemPriceWithOptions(obBasketItem)*obBasketItem.quantity|number_format(2) }}
+	${{ (Basket.getItemPriceWithOptions(obBasketItem)*obBasketItem.quantity)|number_format(2) }}
     </div>
 </div>
 <div class="border border-gray-300 my-2"></div>
 {% endfor %}
 
-{% set subtotal = Basket.getBasketSubtotal() %}
 <div class="text-gray-500">
     <div class="inline-block">Subtotal</div>
     <div class="inline-block float-right text-right">
-	$<span class="subtotal">{{ Basket.getBasketSubtotal()|number_format(2) }}</span>
+	$<span class="subtotal">{{ subtotal|number_format(2) }}</span>
     </div>
 </div>
 
 <div class="text-gray-500">
     <div class="inline-block">Tax</div>
     <div class="inline-block float-right text-right">
-	<span class="tax-amount">${{ taxvalue|number_format(2) }}</span>
+	$<span class="tax-amount">{{ taxvalue|number_format(2) }}</span>
     </div>
 </div>
 <div class="text-gray-500">
@@ -55,7 +56,7 @@
 <div class="text-gray-500">
     <div class="inline-block">Total</div>
     <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
-	<span class="total-amount">{{ (subtotal+taxvalue+shippingvalue)|number_format(2) }}</span>
+	$<span class="total-amount">{{ total|number_format(2) }}</span>
     </div>
 </div>
 {% else %}
@@ -63,55 +64,3 @@
 
 {% endif %}
 
-{# 
-{% set obShippingType = Cart.getActiveShippingTypeFromRequest() %}
-{% set obCartElementList = Cart.get(obShippingType) %}
-{% set totalPriceData = obCartElementList.getTotalPriceData().getData() %}
-{% set subtotal = totalPriceData.price_value %}
-{% set taxvalue = totalPriceData.tax_price_value %}
-{% set shippingvalue = obShippingType ? obShippingType.getFullPriceValue() : 0 %}
-{% if obCartElementList.isNotEmpty() %}
-<div class="flex flex-row flex-nowrap">
-    <div class="flex-1">Name1</div>
-    <div class="flex-1">Quantity</div>
-    <div class="flex-1 text-right">Price</div>
-</div>
-<div class="border border-gray-300 my-2"></div>
-{% for obCartElement in obCartElementList %}
-<div class="cart-item flex flex-row flex-nowrap text-gray-700">
-    {% set obOffer = obCartElement.offer %}
-    <div class="flex-1">{{ obOffer.product.name }}</div>
-    <div class="flex-1 text-right">{{ obCartElement.quantity }}</div>
-    <div class="flex-1 text-right">{{ obCartElementList.getCurrency() }}{{ obCartElement.price_value|number_format(2) }}</div>
-</div>
-<div class="border border-gray-300 my-2"></div>
-{% endfor %}
-
-<div class="text-gray-500">
-    <div class="inline-block">Subtotal</div>
-    <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
-	<span class="subtotal">{{ subtotal|number_format(2) }}</span>
-    </div>
-</div>
-<div class="text-gray-500">
-    <div class="inline-block">Tax</div>
-    <div class="inline-block float-right text-right">
-	<span class="tax-amount">{{ taxvalue|number_format(2) }}</span>
-    </div>
-</div>
-<div class="text-gray-500">
-    <div class="inline-block">Shipping {% if obShippingType %}({{ obShippingType.name }}){% endif %}</div>
-    <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
-	<span class="shipping-amount">{{ shippingvalue|number_format(2) }}</span>
-    </div>
-</div>
-<div class="text-gray-500">
-    <div class="inline-block">Total</div>
-    <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
-	<span class="total-amount">{{ (subtotal+taxvalue+shippingvalue)|number_format(2) }}</span>
-    </div>
-</div>
-{% else %}
-<div>Cart is empty</div>
-{% endif %}
-#}
