@@ -89,8 +89,8 @@ window.addEventListener('load', function() {
     let product_panels = document.querySelectorAll('.product-panel');
     product_panels.forEach((panel) => {
 	panel.addEventListener('click', function (e) {
-	    e.preventDefault();
 	    if (e.target.dataset.action=='add-to-cart') {
+		e.preventDefault();
 		let itemid = panel.dataset.itemid;
 		let product_id = e.target.dataset.productid;
 		let properties = panel.querySelectorAll('select.property-option');
@@ -113,6 +113,9 @@ window.addEventListener('load', function() {
 			'basket/basket-pill': '#basket-pill-wrapper'
 		    }
 		});
+	    }
+	    else {
+		return true;
 	    }
 	    return false;
 	});

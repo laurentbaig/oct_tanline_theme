@@ -11757,6 +11757,7 @@ body {
   padding-bottom: 1rem;
   background-color: #000;
   color: #fff;
+  z-index: 50;
   margin: 0;
 }
 

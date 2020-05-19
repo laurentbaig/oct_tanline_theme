@@ -8,6 +8,7 @@ body {
     @apply px-8 py-4;
     @apply bg-black;
     @apply text-white;
+    @apply z-50;
     margin: 0;
 }
 
