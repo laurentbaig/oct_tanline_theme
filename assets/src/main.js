@@ -346,7 +346,10 @@ window.addEventListener('load', function() {
 				}
 			    });
 			    */
-			});
+			})
+			    .catch(function (response) {
+				console.log(response);
+			    }) ;
 		    }
 		}).render('#paypal-button-container');
 

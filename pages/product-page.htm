@@ -8,10 +8,11 @@ is_hidden = 0
 [ProductItem]
 slug = "{{ :slug }}"
 ==
+{# Get product item #}
+{% set obProduct = ProductItem.get() %}
 <div class="w-11/12 mx-auto">
-    {# Get product item #}
-    {% set obProduct = ProductItem.get() %}
-    {# 
+    {# Hide breadcrumbs #}
+    {#
     {% set arBreadcrumbs = Breadcrumbs.getFromProduct(obProduct) %}
 
     {% if arBreadcrumbs is not empty %}
@@ -52,6 +53,16 @@ slug = "{{ :slug }}"
 	    </div>
 	    {% endfor %}
 	    <div class="product-price">$ {{ obProduct.price|number_format(2) }}</div>
+	    <div class="pb-4">
+	    {% if obProduct.currentDiscounts|length > 0 %}
+	    {% for discount in obProduct.currentDiscounts %}
+		<small>
+		$ {{ discount.amountOff|number_format(2) }} off until {{ discount.until|date('Y-m-d') }}
+		</small><br>
+	    {% endfor %}
+	    {% endif %}
+	    </div>
+	    
 	    <div class="product-description">{{ obProduct.description|raw }}</div>
 	    <div class="py-4"></div>
 
