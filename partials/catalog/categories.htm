@@ -1,7 +1,7 @@
 {% set obCategoryList = categories %}
 {% if obCategoryList.isNotEmpty() %}
 <div class="project-container">
-    {% for obCategory in obCategoryList if obCategory.nestedCount > 0 %}
+    {% for obCategory in obCategoryList if obCategory.allProductsCount > 0 %}
 
     {% if obCategory.preview_image is not empty %}
     {% set image = obCategory.preview_image %}

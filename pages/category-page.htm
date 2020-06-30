@@ -38,10 +38,12 @@ slug = "{{ :slug }}"
 {% partial 'catalog/categories' categories=obCategory.subcategories %}
 {% endif %}
 
-{% if obCategory.nestedCount > 0 %}
 {{ obCategory.name }}
+{% if obCategory.allProductsCount > 0 %}
 <div>{{ obCategory.description|raw }}</div>
 {% partial 'catalog/products' category=obCategory %}
+{% else %}
+<div>No products found.</div>
 {% endif %}
 
 </div>
