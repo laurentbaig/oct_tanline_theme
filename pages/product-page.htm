@@ -66,12 +66,16 @@ slug = "{{ :slug }}"
 	    <div class="product-description">{{ obProduct.description|raw }}</div>
 	    <div class="py-4"></div>
 
+            {% if obProduct.sell_online %}
 	    <label>Quantity</label>
 	    <div class="form-control w-50">
 		<input type="number" value="1">
 	    </div>
 	    <div class="py-1"></div>
 	    <button data-action="add-to-cart" data-productid="{{ obProduct.id }}" class="px-8 py-4">Add to Cart</button>
+            {% else %}
+            {% content 'in_store_only' %}
+            {% endif %}
 	    
 	    <div class="py-4">
 		<h4>Categories</h4>
