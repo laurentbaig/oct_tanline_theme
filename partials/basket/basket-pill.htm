@@ -1,8 +1,3 @@
-{% set obBasket = Basket.get() %}
-{% set itemCount = Basket.getTotalQuantity() %}
-{% if itemCount > 0 %}
-<div class="shopping-cart-pill">
-    <div><i class="fas fa-shopping-cart"></i> <a href="{{ 'basket'|page }}">{{ itemCount}} item{{ itemCount > 1 ? 's' : '' }}</a></div>
-    <div>${{ Basket.getBasketSubtotal()|number_format(2) }}</div>
+<div id="basket-pill-wrapper" class="shopping-cart-pill-container">
+    {% partial 'basket/basket-pill-contents' %}
 </div>
-{% endif %}

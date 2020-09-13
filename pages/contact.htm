@@ -2,6 +2,9 @@ title = "Contact"
 url = "/contact"
 layout = "default"
 is_hidden = 0
+
+[Lbaig\Tanline\Components\ContactForm contactForm]
+
 ==
 <?php
 
@@ -13,13 +16,13 @@ function onStart()
 ?>
 ==
 <div class="w-1/2 mx-auto">
-    <div id="contact-form-loader" class="text-center">
+    <div id="contact-form-loader" class="text-center hidden">
 	<div class="lds-heart"><div></div></div>
     </div>
-    <form id="contact-form" style="opacity: 0; transition: .3s all ease-in">
+    <div id="contact-status"></div>
+    <form id="contact-form">
 	<h2>Send us a message!</h2>
 	<input type="hidden" id="recaptcha-site-key" value="{{ recaptcha_site_key }}">
-	<div id="contact-status"></div>
 	<div class="form-control my-4">
 	    <input type="text" name="name" placeholder="Your name" required>
 	</div>
@@ -29,11 +32,31 @@ function onStart()
 	<div class="form-control my-4">
 	    <textarea name="message" rows="5" placeholder="Your message" required></textarea>
 	</div>
-	<button id="submit-email-button" type="submit">Speak!</button>
+	<button type="submit">Speak!</button>
     </form>
 </div>
 
+{% if recaptcha_site_key %}
 {% put page_scripts %}
 <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+<script>
+ $(document).ready(function () {
+     $("#contact-form").submit(function (e) {
+	 console.log('Submit clicked');
+	 e.preventDefault();
+	 grecaptcha.ready(function() {
+	     grecaptcha
+		 .execute('{{ recaptcha_site_key }}', {action: 'submit'})
+		 .then(function (token) {
+		     $("#contact-form").request('contactForm::onContactFormSubmit', {
+			 data: {
+			     recaptcha: token
+			 }
+		     });
+		 });
+	 });
+     });
+ });
 </script>
 {% endput %}
+{% endif %}

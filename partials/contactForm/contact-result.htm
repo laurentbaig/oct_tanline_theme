@@ -1,0 +1,11 @@
+{% if attempt %}
+{% if status == 1 %}
+<div class="success bg-green-300 border-2 rounded-sm border-green-600 py-2 px-4">
+[{{ "now"|date}}] Success!
+</div>
+{% else %}
+<div class="success bg-red-300 border-2 rounded-sm border-red-600 py-2 px-4">
+Failed.
+</div>
+{% endif %}
+{% endif %}

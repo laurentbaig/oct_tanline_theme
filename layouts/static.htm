@@ -1,6 +1,8 @@
 [staticMenu mainMenu]
 code = "main-menu"
 
+[session]
+
 [Basket]
 
 [staticPage]
@@ -60,9 +62,7 @@ code = "main-menu"
 
 
 	<!-- Shopping basket pill -->
-	<div id="basket-pill-wrapper">
-	    {% partial 'basket/basket-pill' %}
-	</div>
+	{% partial 'basket/basket-pill' %}
 
 	<div id="free-shipping-desktop">
 	    Free shipping!
@@ -99,8 +99,13 @@ code = "main-menu"
 
 	</div>
 
-	{% placeholder page_scripts %}
+	{% partial 'login_button' %}
+
+	<script src="modules/backend/assets/js/vendor/jquery.min.js"></script>
+	{% framework %}
 	<script type="text/javascript" src="{{ 'assets/dist/main.js'|theme }}"></script>
+	{% scripts %}
+	{% placeholder page_scripts %}
 
     </body>
 

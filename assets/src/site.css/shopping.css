@@ -1,11 +1,11 @@
-body {
-    padding-bottom: 56px;
-    margin-bottom: 0;
+
+.shopping-cart-pill-container {
+    @apply fixed inset-x-0 bottom-0
 }
 
 .shopping-cart-pill {
-    @apply fixed inset-x-0 bottom-0 flex;
-    @apply px-8 py-4;
+    @apply flex;
+    @apply px-4 py-2;
     @apply bg-black;
     @apply text-white;
     @apply z-50;
@@ -25,9 +25,13 @@ body {
 	padding-bottom: 0;
     }
 
+    .shopping-cart-pill-container {
+	@apply fixed left-auto bottom-auto;
+	right: 70px;
+	top: 12px;
+    }
     .shopping-cart-pill {
-	@apply fixed top-0 right-0 left-auto bottom-auto;
-	@apply mt-4 mr-8 rounded-full;
-	min-width: 250px;
+	@apply rounded-full;
+	min-width: 240px;
     }
 }

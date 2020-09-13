@@ -14,3 +14,45 @@ is_hidden = 0
     </div>
 </div>
 
+{% put page_scripts %}
+<script>
+ $("#basket-item-wrapper").change(function (e) {
+     console.log(e);
+     if ($(e.target).hasClass('basket-update')) {
+	 e.preventDefault();
+	 let basket = [{
+     	     basket_item_id: e.target.dataset.basketitemid,
+     	     quantity: e.target.value
+     	 }];
+	 $.request('Basket::onUpdate', {
+     	     data: {
+		 basket: basket
+	     },
+     	     update: {
+		 'basket/basket-checkout-button': '#basket-checkout-button',
+     		 'basket/basket-pill-contents': '#basket-pill-wrapper',
+     		 'basket/basket-item-list': '#basket-item-wrapper'
+     	     }
+	 });
+     }
+ });
+
+ $("#basket-item-wrapper").click(function (e) {
+     console.log(e);
+     if ($(e.target).hasClass('basket-delete')) {
+	 console.log('delete me');
+	 let basket = [ e.target.dataset.basketitemid ];
+	 $.request('Basket::onRemove', {
+	     data: {
+		 basket: basket
+	     },
+	     update: {
+		 'basket/basket-checkout-button': '#basket-checkout-button',
+     		 'basket/basket-pill-contents': '#basket-pill-wrapper',
+     		 'basket/basket-item-list': '#basket-item-wrapper'
+	     }
+	 });
+     }
+ });
+</script>
+{% endput %}

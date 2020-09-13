@@ -32,3 +32,21 @@ button, .btn {
 .btn-lg {
     padding: 8px 16px
 }
+
+.tanline-form .row {
+    @apply flex;
+}
+
+.tanline-form .row > .col-md-6 {
+    @apply flex-auto;
+    padding: 8px 16px;
+}
+
+.tanline-form .row .form-group {
+    padding-bottom: 16px
+}
+
+.tanline-form h3 {
+    font-size: 20px;
+    font-weight: 600;
+}

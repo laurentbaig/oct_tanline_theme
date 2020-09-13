@@ -36,3 +36,11 @@
 .main-nav ul > li.active > a {
     border-bottom: 4px solid #6DC9CC;
 }
+
+.dropdown .dropdown-menu {
+    display: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}

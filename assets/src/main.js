@@ -4,10 +4,12 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import request from 'oc-request';
 
 
+/*
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
+*/
 
 var xhrProto = XMLHttpRequest.prototype,
     origOpen = xhrProto.open;
@@ -30,6 +32,7 @@ window.addEventListener('load', function() {
     }
 
     // contact form
+    /*
     let contact_form = document.querySelector("#contact-form");
     if (contact_form) {
 	let recaptcha_site_key = document.querySelector("#recaptcha-site-key");
@@ -84,8 +87,10 @@ window.addEventListener('load', function() {
 	    });
 	}
     }
+    */
 
     // add products to cart
+    /*
     let product_panels = document.querySelectorAll('.product-panel');
     product_panels.forEach((panel) => {
 	panel.addEventListener('click', function (e) {
@@ -120,8 +125,10 @@ window.addEventListener('load', function() {
 	    return false;
 	});
     });
+    */
 
     // cart interaction
+    /*
     let basket_item_wrapper = document.querySelector('#basket-item-wrapper');
     if (basket_item_wrapper) {
 	// handles updating of quantities
@@ -164,8 +171,10 @@ window.addEventListener('load', function() {
 	    return false;
 	});
     }
+    */
 
     // checkout experience
+    /*
     let getEmail = document.querySelector("#get-email");
     if (getEmail) {
 	getEmail.addEventListener('input', function (e) {
@@ -205,8 +214,10 @@ window.addEventListener('load', function() {
 	    return false;
 	});
     }
+    */
 
     let getShipping = document.querySelector('#get-shipping');
+    getShipping = null;
     if (getShipping) {
 	getShipping.addEventListener('input', function(e) {
 	    e.preventDefault();
@@ -242,6 +253,7 @@ window.addEventListener('load', function() {
 
 	    return false;
 	});
+	/*
 	getShipping.addEventListener('click', function(e) {
 	    e.preventDefault();
 	    if (e.target.matches('.edit-button')) {
@@ -336,16 +348,14 @@ window.addEventListener('load', function() {
 				"application/json;charset=UTF-8"
 			    );
 			    xhr.send(JSON.stringify(data));
-			    /*
-			    request.sendData('Order::onCreate', {
-				data: data,
-				update: {},
-				success: function() {
-				    console.log('success');
-				    window.location = '/thank-you';
-				}
-			    });
-			    */
+			    // request.sendData('Order::onCreate', {
+			    // 	data: data,
+			    // 	update: {},
+			    // 	success: function() {
+			    // 	    console.log('success');
+			    // 	    window.location = '/thank-you';
+			    // 	}
+			    // });
 			})
 			    .catch(function (response) {
 				console.log(response);
@@ -356,6 +366,7 @@ window.addEventListener('load', function() {
 	    }
 	    return false;
 	});
+*/
     }
 
 });

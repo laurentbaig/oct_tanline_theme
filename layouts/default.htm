@@ -1,7 +1,10 @@
 [staticMenu mainMenu]
 code = "main-menu"
 
+[session]
+
 [Basket]
+
 ==
 <?php
 function onDownlodPDFDetailsVehicle3()
@@ -80,11 +83,8 @@ function onDownlodPDFDetailsVehicle3()
 	    </nav>
 	</div>
 
-
 	<!-- Shopping basket pill -->
-	<div id="basket-pill-wrapper">
-	    {% partial 'basket/basket-pill' %}
-	</div>
+	{% partial 'basket/basket-pill' %}
 
 	<div id="free-shipping-desktop">
 	    Free shipping!
@@ -120,9 +120,13 @@ function onDownlodPDFDetailsVehicle3()
 
 	</div>
 
-	{% placeholder page_scripts %}
+	{% partial 'login_button' %}
+
+	<script src="modules/backend/assets/js/vendor/jquery.min.js"></script>
+	{% framework %}
 	<script type="text/javascript" src="{{ 'assets/dist/main.js'|theme }}"></script>
+	{% scripts %}
+	{% placeholder page_scripts %}
 
     </body>
-
 </html>

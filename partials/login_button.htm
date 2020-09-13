@@ -1,0 +1,26 @@
+{% if user %}
+<div class="dropdown fixed" style="top: 10px; right: 10px">
+    <button class="block rounded-full overflow-hidden py-2 px-4 text-white bg-aqua border-2 border-gray-200 hover:bg-aqua-lite focus:outline-none focus:border-gray-500">
+	<i class="fas fa-user"></i>
+    </button>
+    <div class="dropdown-menu bg-white py-2 absolute right-0 bg-gray-100 w-48 shadow">
+	<a class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+	   href="/"
+	>Home</a>
+	<a class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+	   href="{{ 'order_history'| page }}"
+	>Order History</a>
+	<div class="border-bottom h-2"></div>
+	<a class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+	   data-request="onLogout"
+	   data-request-data="redirect: '/'"
+	>Sign out</a>
+    </div>
+</div>
+{% else %}
+<div class="fixed" style="top: 10px; right: 10px">
+    <a href="{{ 'register'| page }}" class="rounded-full py-2 px-4 text-white bg-aqua hover:bg-aqua-lite">
+	<i class="fas fa-sign-in-alt"></i>
+    </a>
+</div>
+{% endif %}

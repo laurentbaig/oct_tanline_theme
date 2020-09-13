@@ -11,7 +11,7 @@ is_hidden = 0
 
 function onStart()
 {
-  $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_id');
+$this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_id');
 }
 ?>
 ==
@@ -95,6 +95,7 @@ function onStart()
 	    <div class="card-body py-2 font-sans">
 		<div class="flex flex-row flex-wrap">
 		    <div id="paypal-button-container"></div>
+		    <div id="page-processing" class="mx-auto lds-heart"><div class="hidden"></div></div>
 		</div>
 	    </div>
 
@@ -117,4 +118,142 @@ function onStart()
 
 {% put page_scripts %}
 <script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=USD" data-sdk-integration-source="button-factory"></script>
+
+<script>
+ function validateEmail(email) {
+     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+     return re.test(String(email).toLowerCase());
+ }
+
+ $("#get-email input").on('input', function (e) {
+     if (validateEmail(e.target.value)) {
+	 $("#get-email button").prop('disabled', false);
+     }
+     else {
+	 $("#get-email button").prop('disabled', true);
+     }
+ });
+ $("#get-email").click(function (e) {
+     if ($(e.target).hasClass('edit-button')) {
+	 $("#get-email form").removeClass('hidden');
+	 $("#get-email .edit-button").addClass('hidden');
+	 $("#get-shipping .card-body").addClass('hidden');
+	 $("#get-payment .card-body").addClass('hidden');
+	 $("#get-email .result").text('');
+     }
+     else if (e.target.tagName === 'BUTTON') {
+	 e.preventDefault();
+	 $("#get-email form").addClass('hidden');
+	 $("#get-email .result").html($("#get-email #email").val());
+	 $("#get-email .edit-button").removeClass('hidden');
+	 $("#get-shipping .card-body").removeClass('hidden');
+
+     }
+ });
+
+ $("#get-shipping").on('input', function (e) {
+     let addressee = document.querySelector("#addressee").value;
+     let street = document.querySelector("#street").value;
+     let city = document.querySelector("#city").value;
+     let state = document.querySelector("#state").value;
+     let zip = document.querySelector("#zip").value;
+     let phone = document.querySelector('#phone').value;
+     let email = document.querySelector('#email').value;
+     if (addressee.length > 0 && street.length > 0
+	 && city.length > 0 && zip.length > 0 && state.length > 0
+	 && phone.length > 0 // && shipping > 0
+     ) {
+	 $('#get-shipping button').prop('disabled', false);
+     } else {
+	 $('#get-shipping button').prop('disabled', true);
+     }
+ });
+
+ $("#get-shipping").click(function (e) {
+     if ($(e.target).hasClass('edit-button')) {
+	 $("#get-shipping form").removeClass('hidden');
+	 $("#get-shipping .edit-button").addClass('hidden');
+	 $("#get-shipping .result").text('');
+	 $("#get-payment .card-body").addClass('hidden');
+     }
+     else if (e.target.tagName === 'BUTTON') {
+	 e.preventDefault();
+	 let addressee = document.querySelector("#addressee").value;
+	 let street = document.querySelector("#street").value;
+	 let city = document.querySelector("#city").value;
+	 let state = document.querySelector("#state").value;
+	 let zip = document.querySelector("#zip").value;
+	 let phone = document.querySelector('#phone').value;
+	 let email = document.querySelector('#email').value;
+	 let basketId = document.querySelector("#basket-id").value;
+	 let result=`<div>${addressee}</div>`
+		  + `<div>${street}</div>`
+		  + `<div>${city}, ${state}, ${zip}</div>`
+		  + `<div>${phone}</div>`;
+	 $("#get-shipping .result").html(result);
+	 $("#get-shipping form").addClass('hidden');
+	 $("#get-shipping .edit-button").removeClass('hidden');
+	 $("#get-payment .card-body").removeClass('hidden');
+
+	 let subTotal = document.querySelector('.order-summary .subtotal').innerHTML;
+	 let totalPrice = document.querySelector('.order-summary .total-amount').innerHTML;
+	 let taxAmount = document.querySelector('.order-summary .tax-amount').innerHTML;
+
+	 $("#paypal-button-container").html('');
+	 paypal.Buttons({
+	     style: {
+		 shape: 'rect',
+		 color: 'blue',
+		 layout: 'vertical',
+		 label: 'paypal',
+	     },
+	     createOrder: function(data, actions) {
+		 // disable button?
+		 return actions.order.create({
+		     purchase_units: [{
+			 amount: {
+			     value: totalPrice 
+			 }
+		     }]
+		 });
+	     },
+	     onApprove: function(data, actions) {
+		 $("#paypal-button-container").addClass('hidden');
+		 $("#page-processing div").removeClass('hidden');
+		 return actions.order.capture()
+			       .then(function(details) {
+				   let data = {
+				       order: {
+					   basket_id: basketId,
+					   payment_method_id: 0,
+					   subtotal: subTotal,
+					   tax_amount: taxAmount,
+					   total_price: totalPrice,
+					   email: email,
+					   phone: phone,
+					   shipping_address: {
+					       addressee,
+					       street,
+					       city,
+					       state,
+					       postcode: zip
+					   },
+				       },
+				   };
+				   $.request('Order::onCreate', {
+				       data: data,
+				       update: {},
+				       success: function() {
+					   window.location = '/thank-you'
+				       }
+				   });
+			       })
+			       .catch(function (response) {
+				   console.log(response);
+			       }) ;
+	     }
+	 }).render('#paypal-button-container');
+     }
+ })
+</script>
 {% endput %}
