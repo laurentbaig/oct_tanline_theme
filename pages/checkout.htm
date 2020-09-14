@@ -11,7 +11,7 @@ is_hidden = 0
 
 function onStart()
 {
-$this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_id');
+    $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_id');
 }
 ?>
 ==
@@ -120,11 +120,13 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 <script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=USD" data-sdk-integration-source="button-factory"></script>
 
 <script>
+ // function to validate email format
  function validateEmail(email) {
      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
      return re.test(String(email).toLowerCase());
  }
 
+ // test for email, if valid enable button
  $("#get-email input").on('input', function (e) {
      if (validateEmail(e.target.value)) {
 	 $("#get-email button").prop('disabled', false);
@@ -133,6 +135,8 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	 $("#get-email button").prop('disabled', true);
      }
  });
+
+ // if button clicked, either edit email or move to address
  $("#get-email").click(function (e) {
      if ($(e.target).hasClass('edit-button')) {
 	 $("#get-email form").removeClass('hidden');
@@ -151,6 +155,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
      }
  });
 
+ // validate address input
  $("#get-shipping").on('input', function (e) {
      let addressee = document.querySelector("#addressee").value;
      let street = document.querySelector("#street").value;
@@ -169,6 +174,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
      }
  });
 
+ // if button clicked, either edit address or move on to payment
  $("#get-shipping").click(function (e) {
      if ($(e.target).hasClass('edit-button')) {
 	 $("#get-shipping form").removeClass('hidden');
@@ -199,6 +205,8 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	 let totalPrice = document.querySelector('.order-summary .total-amount').innerHTML;
 	 let taxAmount = document.querySelector('.order-summary .tax-amount').innerHTML;
 
+	 // once the shipping button is clicked, go ahead and create
+	 // (render) the payment button here
 	 $("#paypal-button-container").html('');
 	 paypal.Buttons({
 	     style: {
@@ -222,6 +230,8 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 		 $("#page-processing div").removeClass('hidden');
 		 return actions.order.capture()
 			       .then(function(details) {
+				   // this is our callback space after
+				   // payment is confirmed via PayPal
 				   let data = {
 				       order: {
 					   basket_id: basketId,

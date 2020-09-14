@@ -103,12 +103,12 @@ slug = "{{ :slug }}"
 
 {% put page_scripts %}
 <script>
+ // add to basket
 $(".product-panel").click(function (e) {
     if (e.target.tagName !== 'BUTTON') {
 	return;
     }
     e.preventDefault();
-    console.log(e);
 
     var panel = e.currentTarget;
 
@@ -127,7 +127,6 @@ $(".product-panel").click(function (e) {
 	    properties: property_ids
 	}]
     };
-    //console.log(data);
     $.request('Basket::onAdd', {
 	data: data,
 	update: {

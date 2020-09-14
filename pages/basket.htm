@@ -16,6 +16,7 @@ is_hidden = 0
 
 {% put page_scripts %}
 <script>
+ // update quantities in basket
  $("#basket-item-wrapper").change(function (e) {
      console.log(e);
      if ($(e.target).hasClass('basket-update')) {
@@ -37,6 +38,7 @@ is_hidden = 0
      }
  });
 
+ // remove from basket
  $("#basket-item-wrapper").click(function (e) {
      console.log(e);
      if ($(e.target).hasClass('basket-delete')) {
