@@ -32,7 +32,7 @@ function onStart()
 	<div class="form-control my-4">
 	    <textarea name="message" rows="5" placeholder="Your message" required></textarea>
 	</div>
-	<button type="submit">Speak!</button>
+	<button id="submit" type="submit">Speak!</button>
     </form>
 </div>
 
@@ -44,6 +44,7 @@ function onStart()
      $("#contact-form").submit(function (e) {
 	 console.log('Submit clicked');
 	 e.preventDefault();
+         $("button#submit").prop("disabled", true);
 	 grecaptcha.ready(function() {
 	     grecaptcha
 		 .execute('{{ recaptcha_site_key }}', {action: 'submit'})
