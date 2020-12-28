@@ -2,7 +2,7 @@
 {% set obBasketItems = obBasket.items %}
 {% set subtotal = Basket.getBasketSubtotal() %}
 {% set taxvalue = Basket.getTaxable() %}
-{% set shippingvalue = Order.shipping() %}
+{% set shippingvalue = Order.shipping(Countries.countryId) %}
 {% set total = subtotal + taxvalue + shippingvalue %}
 
 {% if obBasketItems.isNotEmpty() %}

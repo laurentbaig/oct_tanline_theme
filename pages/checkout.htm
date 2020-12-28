@@ -69,29 +69,33 @@ function onStart()
 			#}
 
 			<div class="form-control w-full">
-			    <select id="country-control" value="{{Order.country_id}}">
-				{% for item in Countries.countries %}
-				<option value="{{ item.id }}">{{ item.name }} - ${{ item.shipping }}</option>
-				{% endfor %}
-			    </select>
-			</div>
-
-			<div class="form-control w-full">
 			    <input type="text" id="addressee" placeholder="Addressee, e.g. Harry Potter" required autocomplete="name">
 			</div>
 			<div class="form-control w-full">
 			    <input type="text" id="street" placeholder="Street" required autocomplete="street-address">
 			</div>
 			<div class="form-control w-full">
-			    <input type="text" id="city" placeholder="City" required autocomplete="address-level2">
-			</div>
-			<div class="form-control w-full">
-			    <select id="state" autocomplete="address-level1">
-				{% partial 'state_options' %}
-			    </select>
+			    <input type="text" id="city" placeholder="City / Town" required autocomplete="address-level2">
 			</div>
 			<div class="form-control w-full">
 			    <input type="text" id="zip" placeholder="ZIP Code" required autocomplete="postal-code">
+			</div>
+
+			<div class="flex w-full">
+			    <div class="form-control flex-1">
+			        <select id="countries"
+			    	    name="country_id"
+			    	    data-request="onCountrySelect"
+			    	    data-request-update="state_options: '#state-options', 'basket/basket-item-summary': '#basket-item-summary'">
+			    	{% for item in Countries.countries %}
+			    	<option value="{{ item.id }}">{{ item.name }} {% if item.shipping > 0 %}(+${{ item.shipping }}){% endif %}</option>
+			    	{% endfor %}
+			        </select>
+			    </div>
+
+			    <div id="state-options" class="form-control flex-1">
+			    {% partial  'state_options' %}
+			    </div>
 			</div>
 
 			<div class="form-control w-full">
@@ -284,19 +288,22 @@ function onStart()
      }
  });
 
- $("#country-control").change(function (e) {
+ /*
+ $("#countries").change(function (e) {
      e.preventDefault();
      console.log('tada!');
-     let country_id = document.querySelector("#country-control").value;
+     let country_id = document.querySelector("#countries").value;
      $.request('Order::onUpdate', {
 	 data: {
 	     'country_id': country_id
 	 },
 	 update: {
+	     'state_options': '#state-options',
 	     'basket/basket-item-summary': '#basket-item-summary'
 	 }
      })
 
  });
+ */
 </script>
 {% endput %}
