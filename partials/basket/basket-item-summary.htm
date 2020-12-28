@@ -2,7 +2,7 @@
 {% set obBasketItems = obBasket.items %}
 {% set subtotal = Basket.getBasketSubtotal() %}
 {% set taxvalue = Basket.getTaxable() %}
-{% set shippingvalue = 0 %}
+{% set shippingvalue = Order.shipping() %}
 {% set total = subtotal + taxvalue + shippingvalue %}
 
 {% if obBasketItems.isNotEmpty() %}
@@ -49,8 +49,8 @@
 </div>
 <div class="text-gray-500">
     <div class="inline-block">Shipping {% if obShippingType %}({{ obShippingType.name }}){% endif %}</div>
-    <div class="inline-block float-right text-right">{{ obCartElementList.getCurrency() }}
-	<span class="shipping-amount">{{ shippingvalue|number_format(2) }}</span>
+    <div class="inline-block float-right text-right">
+	$<span class="shipping-amount">{{ shippingvalue|number_format(2) }}</span>
     </div>
 </div>
 <div class="text-gray-500">

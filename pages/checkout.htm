@@ -5,6 +5,8 @@ is_hidden = 0
 
 [Basket]
 
+[Countries]
+
 [Order]
 ==
 <?php
@@ -27,7 +29,11 @@ function onStart()
 	    <div class="card-body-form py-2 font-sans">
 		<form>
 		    <div class="form-control">
-			<input type="email" id="email" autocomplete="email">
+			<input type="email" id="email" autocomplete="email"
+			       {% if user %}
+			       value="{{ user.email }}"
+			       {% endif %}
+			>
 		    </div>
 		    <div class="text-gray-600 text-xs">
 			You'll receive receipts and notifications at this email address
@@ -61,6 +67,15 @@ function onStart()
 			</div>
 			{% endif %}
 			#}
+
+			<div class="form-control w-full">
+			    <select id="country-control" value="{{Order.country_id}}">
+				{% for item in Countries.countries %}
+				<option value="{{ item.id }}">{{ item.name }} - ${{ item.shipping }}</option>
+				{% endfor %}
+			    </select>
+			</div>
+
 			<div class="form-control w-full">
 			    <input type="text" id="addressee" placeholder="Addressee, e.g. Harry Potter" required autocomplete="name">
 			</div>
@@ -78,6 +93,7 @@ function onStart()
 			<div class="form-control w-full">
 			    <input type="text" id="zip" placeholder="ZIP Code" required autocomplete="postal-code">
 			</div>
+
 			<div class="form-control w-full">
 			    <input type="tel" id="phone" placeholder="Phone Number" required autocomplete="tel">
 			</div>
@@ -109,7 +125,7 @@ function onStart()
 		<span class="text-lg font-bold">Order Summary</span>
 		<span class="float-right text-sm text-blue-500"><a href="{{ 'cart'|page }}">Edit Cart</a></span>
 	    </div>
-	    <div class="card-body font-sans">
+	    <div id="basket-item-summary" class="card-body font-sans">
 		{% partial 'basket/basket-item-summary' %}
 	    </div>
 	</div>
@@ -203,6 +219,7 @@ function onStart()
 
 	 let subTotal = document.querySelector('.order-summary .subtotal').innerHTML;
 	 let totalPrice = document.querySelector('.order-summary .total-amount').innerHTML;
+	 let shipping = document.querySelector('.order-summary .shipping-amount').innerHTML;
 	 let taxAmount = document.querySelector('.order-summary .tax-amount').innerHTML;
 
 	 // once the shipping button is clicked, go ahead and create
@@ -237,6 +254,7 @@ function onStart()
 					   basket_id: basketId,
 					   payment_method_id: 0,
 					   subtotal: subTotal,
+					   shipping: shipping,
 					   tax_amount: taxAmount,
 					   total_price: totalPrice,
 					   email: email,
@@ -264,6 +282,21 @@ function onStart()
 	     }
 	 }).render('#paypal-button-container');
      }
- })
+ });
+
+ $("#country-control").change(function (e) {
+     e.preventDefault();
+     console.log('tada!');
+     let country_id = document.querySelector("#country-control").value;
+     $.request('Order::onUpdate', {
+	 data: {
+	     'country_id': country_id
+	 },
+	 update: {
+	     'basket/basket-item-summary': '#basket-item-summary'
+	 }
+     })
+
+ });
 </script>
 {% endput %}
