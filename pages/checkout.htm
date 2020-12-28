@@ -207,7 +207,10 @@ function onStart()
 	 let addressee = document.querySelector("#addressee").value;
 	 let street = document.querySelector("#street").value;
 	 let city = document.querySelector("#city").value;
-	 let state = document.querySelector("#state").value;
+	 let state = document.querySelector("#state").selectedOptions[0].innerHTML;
+	 let state_id = document.querySelector("#state").value;
+	 let country = document.querySelector("#countries").selectedOptions[0].innerHTML;
+	 let country_id = document.querySelector("#countries").value;
 	 let zip = document.querySelector("#zip").value;
 	 let phone = document.querySelector('#phone').value;
 	 let email = document.querySelector('#email').value;
@@ -215,6 +218,7 @@ function onStart()
 	 let result=`<div>${addressee}</div>`
 		  + `<div>${street}</div>`
 		  + `<div>${city}, ${state}, ${zip}</div>`
+	          + `<div>${country}</div>`
 		  + `<div>${phone}</div>`;
 	 $("#get-shipping .result").html(result);
 	 $("#get-shipping form").addClass('hidden');
@@ -268,6 +272,7 @@ function onStart()
 					       street,
 					       city,
 					       state,
+					       country,
 					       postcode: zip
 					   },
 				       },
