@@ -13,7 +13,7 @@ is_hidden = 0
 
 function onStart()
 {
-    $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_id');
+$this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_id');
 }
 ?>
 ==
@@ -84,17 +84,26 @@ function onStart()
 			<div class="flex w-full">
 			    <div class="form-control flex-1">
 			        <select id="countries"
-			    	    name="country_id"
-			    	    data-request="onCountrySelect"
-			    	    data-request-update="state_options: '#state-options', 'basket/basket-item-summary': '#basket-item-summary'">
-			    	{% for item in Countries.countries %}
-			    	<option value="{{ item.id }}">{{ item.name }} {% if item.shipping > 0 %}(+${{ item.shipping }}){% endif %}</option>
-			    	{% endfor %}
+			    		name="country_id"
+			    		data-request="onCountrySelect"
+			    		data-request-update="state_options: '#state-options', 'basket/basket-item-summary': '#basket-item-summary'">
+			    	    {% for item in Countries.countries %}
+			    	    <option value="{{ item.id }}">{{ item.name }} {% if item.shipping > 0 %}(+${{ item.shipping }}){% endif %}</option>
+			    	    {% endfor %}
 			        </select>
 			    </div>
 
 			    <div id="state-options" class="form-control flex-1">
-			    {% partial  'state_options' %}
+				{% partial  'state_options' %}
+			    </div>
+			</div>
+			<!-- alternate international -->
+			<div id="altinternational" class="flex w-full hidden">
+			    <div class="form-control flex-1">
+				<input type="text" id="altcountry" placeholder="Country">
+			    </div>
+			    <div class="form-control flex-1">
+				<input type="text" id="altstate" placeholder="Province/State">
 			    </div>
 			</div>
 
@@ -102,6 +111,7 @@ function onStart()
 			    <input type="tel" id="phone" placeholder="Phone Number" required autocomplete="tel">
 			</div>
 		    </div>
+		    <div class="py-1"></div>
 		    <button class="w-full" disabled>continue</button>
 		</form>
 		<div class="result text-gray-500"></div>
@@ -208,9 +218,12 @@ function onStart()
 	 let street = document.querySelector("#street").value;
 	 let city = document.querySelector("#city").value;
 	 let state = document.querySelector("#state").selectedOptions[0].innerHTML;
-	 let state_id = document.querySelector("#state").value;
 	 let country = document.querySelector("#countries").selectedOptions[0].innerHTML;
 	 let country_id = document.querySelector("#countries").value;
+	 if (country_id == 3) {
+	     state = document.querySelector("#altstate").value;
+	     country = document.querySelector("#altcountry").value;
+	 }
 	 let zip = document.querySelector("#zip").value;
 	 let phone = document.querySelector('#phone').value;
 	 let email = document.querySelector('#email').value;
@@ -293,22 +306,16 @@ function onStart()
      }
  });
 
- /*
  $("#countries").change(function (e) {
      e.preventDefault();
-     console.log('tada!');
      let country_id = document.querySelector("#countries").value;
-     $.request('Order::onUpdate', {
-	 data: {
-	     'country_id': country_id
-	 },
-	 update: {
-	     'state_options': '#state-options',
-	     'basket/basket-item-summary': '#basket-item-summary'
-	 }
-     })
-
+     console.log(country_id);
+     if (country_id == 3) {
+	 $("#altinternational").removeClass('hidden');
+     }
+     else {
+	 $("#altinternational").addClass('hidden');
+     }
  });
- */
 </script>
 {% endput %}
