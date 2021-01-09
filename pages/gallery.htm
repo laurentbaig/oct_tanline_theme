@@ -30,6 +30,7 @@ itemid = {{ :itemid }}
 	{% set image = galleryItem.item.image %}
 	<div class="py-8">
 	    <img class="mx-auto" src="{{ image.path }}"
+		 loading="lazy"
 		 title="{{ image.title }}"
 		 alt="{{ image.description }}">
 	</div>

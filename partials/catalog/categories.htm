@@ -17,6 +17,7 @@
 	    <div class="image-list">
 		{% if image %}
 		<img src="{{ image.getThumb(400,400,'crop') }}" title="{{ image.title }}"
+		     loading="lazy"
 		     alt="{{ image.description }}">
 		{% endif %}
 	    </div>

@@ -11,7 +11,9 @@
 	    </div>
 	    <div class="image-list">
 		{% set image = obProduct.preview_image %}
-		<img src="{{ image.path }}" title="{{ image.title }}" alt="{{ image.description }}">
+		<img src="{{ image.path }}" title="{{ image.title }}"
+		     loading="lazy"
+		     alt="{{ image.description }}">
 	    </div>
 	</a>
         {% if obProduct.web_exclusive %}
