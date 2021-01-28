@@ -8,6 +8,13 @@ is_hidden = 0
 [ProductItem]
 slug = "{{ :slug }}"
 ==
+function onEnd() {
+$product = $this->components['ProductItem']->get();
+if ($product) {
+$this->page->title = $product->name . " - Tanline Printing";
+}
+}
+==
 {# Get product item #}
 {% set obProduct = ProductItem.get() %}
 <div class="w-11/12 mx-auto">

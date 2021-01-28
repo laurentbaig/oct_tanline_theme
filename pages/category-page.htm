@@ -10,6 +10,15 @@ slug = "{{ :slug }}"
 
 [Breadcrumbs]
 ==
+<?php
+function onEnd() {
+$category = $this->components['CategoryItem']->get();
+if ($category) {
+$this->page->title = $category->name . " - Tanline Printing";
+}
+}
+?>
+==
 {# Get category item #}
 {% set obCategory = CategoryItem.get() %}
 
