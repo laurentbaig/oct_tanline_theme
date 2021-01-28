@@ -11,7 +11,7 @@ slug = "{{ :slug }}"
 function onEnd() {
 $product = $this->components['ProductItem']->get();
 if ($product) {
-$this->page->title = $product->name . " - Tanline Printing";
+$this->page->title = $product->name;
 }
 }
 ==
