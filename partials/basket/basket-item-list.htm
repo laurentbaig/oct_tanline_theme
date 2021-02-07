@@ -35,7 +35,7 @@
 		   data-basketitemid="{{ obBasketItem.id}}">
 	</div>
     </div>
-    <div class="flex-none text-right" style="width: 10rem">
+    <div class="flex-none text-right {{ obBasketItem.isDiscounted ? 'text-green-500' : '' }}" style="width: 10rem">
 	${{ (Basket.getItemPriceWithOptions(obBasketItem)*obBasketItem.quantity)|number_format(2) }}</div>
 </div>
 <div class="border border-gray-300 my-2"></div>

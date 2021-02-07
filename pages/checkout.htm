@@ -239,6 +239,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	 $("#get-payment .card-body").removeClass('hidden');
 
 	 let subTotal = document.querySelector('.order-summary .subtotal').innerHTML;
+	 let discount = document.querySelector('.order-summary .discount').innerHTML;
 	 let totalPrice = document.querySelector('.order-summary .total-amount').innerHTML;
 	 let shipping = document.querySelector('.order-summary .shipping-amount').innerHTML;
 	 let taxAmount = document.querySelector('.order-summary .tax-amount').innerHTML;
@@ -275,6 +276,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 					   basket_id: basketId,
 					   payment_method_id: 0,
 					   subtotal: subTotal,
+					   discount: discount,
 					   shipping: shipping,
 					   tax_amount: taxAmount,
 					   total_price: totalPrice,

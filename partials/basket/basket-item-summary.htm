@@ -1,9 +1,10 @@
 {% set obBasket = Basket.get() %}
 {% set obBasketItems = obBasket.items %}
 {% set subtotal = Basket.getBasketSubtotal() %}
+{% set discount = Basket.getOrderDiscounts() %}
 {% set taxvalue = Basket.getTaxable() %}
 {% set shippingvalue = Order.shipping(Countries.countryId) %}
-{% set total = subtotal + taxvalue + shippingvalue %}
+{% set total = subtotal + taxvalue + shippingvalue - discounts %}
 
 {% if obBasketItems.isNotEmpty() %}
 <input type="hidden" id="basket-id" value="{{ obBasket.id }}">
@@ -38,6 +39,13 @@
     <div class="inline-block">Subtotal</div>
     <div class="inline-block float-right text-right">
 	$<span class="subtotal">{{ subtotal|number_format(2) }}</span>
+    </div>
+</div>
+
+<div class="text-green-500 {{ discount == 0 ? 'hidden' : '' }}">
+    <div class="inline-block">Discount</div>
+    <div class="inline-block float-right text-right">
+	-$<span class="discount">{{ discount|number_format(2) }}</span>
     </div>
 </div>
 
