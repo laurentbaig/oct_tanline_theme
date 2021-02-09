@@ -72,7 +72,7 @@ $this->page->title = $product->name;
 	    {% if obProduct.currentDiscounts|length > 0 %}
 	    {% for discount in obProduct.currentDiscounts %}
 		<small class="text-green-500">
-		$ {{ discount.amountOff|number_format(2) }} off until {{ discount.until|date('Y-m-d H:i:s') }}
+		$ {{ discount.amountOff|number_format(2) }} off until {{ discount.until|date('Y-m-d') }}
 		</small>
 		<br>
 	    {% endfor %}
@@ -81,7 +81,7 @@ $this->page->title = $product->name;
             {% if obProduct.categoryDiscounts|length > 0 %}
             {% for discount in obProduct.categoryDiscounts %}
 		<small class="text-green-500">
-		    $ {{ discount.categoryProductAmountOff(obProduct)|number_format(2) }} off until {{ discount.until|date('Y-m-d' H:i:s) }}
+		    $ {{ discount.categoryProductAmountOff(obProduct)|number_format(2) }} off until {{ discount.until|date('Y-m-d') }}
                 </small>
 	    {% endfor %}
             {% endif %}
