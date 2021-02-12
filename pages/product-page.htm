@@ -58,7 +58,7 @@ $this->page->title = $product->name;
 	<div class="product-panel px-8" data-itemid="{{ obProduct.id }}">
 	    <h1 class="uppercase text-xl"> {{ obProduct.name }}</h1>
 	    {% for property in obProduct.properties %}
-	    <label>{{ property.name }}</label>
+	    <label>{{ property.display_name }}</label>
 	    <div class="form-control">
 		<select class="property-option">
 		    {% for option in property.options %}
