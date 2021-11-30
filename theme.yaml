@@ -3,3 +3,11 @@ description: 'Tanline printing is a Tucson-local print shop that can serve your 
 author: 'Laurent Baig'
 homepage: ''
 code: asdhfkahsdf
+
+form:
+    fields:
+        banner:
+            label: Banner Image
+            type: mediafinder
+            mode: image
+            imageWidth: 400

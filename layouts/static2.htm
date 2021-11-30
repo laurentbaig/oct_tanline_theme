@@ -1,0 +1,123 @@
+[staticMenu mainMenu]
+code = "main-menu"
+
+[session]
+
+[Basket]
+
+[staticPage]
+==
+<!DOCTYPE html>
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en-US" >
+
+    <head>
+	<meta charset="utf-8" />
+	<title>{{ this.page.title }} - {{ this.theme.config.name }}</title>
+	<meta name="description" content="{{ this.theme.config.description }}">
+	<meta name="author" content="Laurent Baig">
+
+	<!-- Mobile specific stuff -->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<!-- base url -->
+	<base href="{{ url('/') }}">
+
+	<!-- random things for open graph and blah -->
+	<link rel="canonical" href="{{ url('/') }}"/>
+	<meta property="og:site_name" content="{{ this.theme.config.name }}"/>
+	<meta property="og:title" content="{{ this.theme.config.description }}"/>
+	<meta property="og:url" content="{{ url('/') }}"/>
+	<meta property="og:type" content="website"/>
+	<meta itemprop="name" content="{{ this.theme.config.name }}"/>
+	<meta itemprop="url" content="{{ url('/') }}"/>
+	<meta name="twitter:title" content="{{ this.theme.config.name }}"/>
+	<meta name="twitter:url" content="{{ url('/') }}"/>
+	<meta name="twitter:card" content="summary"/>
+	<meta name="description" content="{{ this.theme.config.description }}" />
+
+	<!-- load in our stylesheet -->
+	<link rel="stylesheet" type="text/css" href="{{ 'assets/dist/styles.css'|theme }}">
+	{#
+	<link rel="stylesheet" href="//basehold.it/25">
+	#}
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-KW4MC5MWDT"></script>
+	<script>
+	 window.dataLayer = window.dataLayer || [];
+	 function gtag(){dataLayer.push(arguments);}
+	 gtag('js', new Date());
+
+	 gtag('config', 'G-KW4MC5MWDT');
+	</script>
+    </head>
+
+    <body class="relative">
+	
+	<!-- Mobile nav -->
+	<div id="mobileNav" class="container hide-nav">
+	    <div class="sm:hidden text-center" id="mobileMenuLink"><a href="#"><span class="flip">&#8681;</span> Menu <span class="flip">&#8681;</span></a></div>
+	    <nav class="md:hidden overflow-hidden hide-nav">
+		<ul class="list-none">
+		    {% for item in mainMenu.menuItems %}
+		    <li class="text-center">
+			<a href="{{ item.url }}">{{ item.title }}</a>
+		    </li>
+		    {% endfor %}
+		</ul>
+	    </nav>
+	</div>
+
+
+	<!-- Shopping basket pill -->
+	{% partial 'basket/basket-pill' %}
+
+	<div id="free-shipping-desktop">
+	    Free shipping to US!
+	</div>
+	
+	<!-- main layout -->
+	<div class="container mx-auto">
+	    <header id="header">
+		<div id="logo" data-content-field="site-title">
+		    <!-- <h1 class="logo"><a href="/"><img class="mx-auto" src="{{ 'assets/images/tanline2.jpg'| theme }}"></a></h1> -->
+		    <h1 class="logo"><a href="/"><img class="mx-auto" src="{{ this.theme.banner|media }}"></a></h1>
+		</div>
+
+		{% partial 'nav' %}
+	    </header>
+
+	    <div id="free-shipping-mobile" class="text-center">
+		Free shipping!
+	    </div>
+
+
+	    <section id="page" role="main" data-content-field="main-content" class="static">
+		<div class="static-container">
+		    {% page %}
+		</div>
+	    </section>
+
+	    <div class="p-4"></div>
+
+	    <footer id="footer">
+
+
+
+	    </footer>
+
+	</div>
+
+	{% partial 'login_button' %}
+
+	<script src="modules/backend/assets/js/vendor/jquery.min.js"></script>
+	{% framework %}
+	<script type="text/javascript" src="{{ 'assets/dist/main.js'|theme }}"></script>
+	{% scripts %}
+	{% placeholder page_scripts %}
+
+    </body>
+
+</html>
