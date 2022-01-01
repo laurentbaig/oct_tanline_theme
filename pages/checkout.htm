@@ -191,11 +191,13 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
      let street = document.querySelector("#street").value;
      let city = document.querySelector("#city").value;
      let state = document.querySelector("#state").value;
+     let altstate = document.querySelector("#altstate").value;
      let zip = document.querySelector("#zip").value;
      let phone = document.querySelector('#phone').value;
      let email = document.querySelector('#email').value;
      if (addressee.length > 0 && street.length > 0
-	 && city.length > 0 && zip.length > 0 && state.length > 0
+	 && city.length > 0 && zip.length > 0
+	 && (state.length > 0 || altstate.length > 0)
 	 && phone.length > 0 // && shipping > 0
      ) {
 	 $('#get-shipping button').prop('disabled', false);
