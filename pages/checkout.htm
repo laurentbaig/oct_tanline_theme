@@ -219,12 +219,14 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	 let addressee = document.querySelector("#addressee").value;
 	 let street = document.querySelector("#street").value;
 	 let city = document.querySelector("#city").value;
-	 let state = document.querySelector("#state").selectedOptions[0].innerHTML;
+	 let state = '';
 	 let country = document.querySelector("#countries").selectedOptions[0].innerHTML;
 	 let country_id = document.querySelector("#countries").value;
 	 if (country_id == 3) {
 	     state = document.querySelector("#altstate").value;
 	     country = document.querySelector("#altcountry").value;
+	 } else {
+	     state = document.querySelector("#state").selectedOptions[0].innerHTML;
 	 }
 	 let zip = document.querySelector("#zip").value;
 	 let phone = document.querySelector('#phone').value;
@@ -313,7 +315,6 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
  $("#countries").change(function (e) {
      e.preventDefault();
      let country_id = document.querySelector("#countries").value;
-     console.log(country_id);
      if (country_id == 3) {
 	 $("#altinternational").removeClass('hidden');
      }
