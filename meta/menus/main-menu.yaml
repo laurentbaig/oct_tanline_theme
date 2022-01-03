@@ -14,23 +14,23 @@ items:
             cssClass: ''
             isExternal: '0'
     -
-        title: Shop
-        nesting: ''
+        title: Webstore
         type: cms-page
-        url: ''
         code: ''
         reference: shop
-        cmsPage: ''
-        replace: ''
         viewBag:
             isHidden: '0'
             cssClass: ''
             isExternal: '0'
     -
         title: 'Gallery Exhibitions'
+        nesting: ''
         type: cms-page
+        url: ''
         code: ''
         reference: gallery
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
             cssClass: ''
@@ -49,7 +49,7 @@ items:
             cssClass: ''
             isExternal: '0'
     -
-        title: Contact
+        title: 'Custom Work / Contact'
         nesting: ''
         type: cms-page
         url: ''

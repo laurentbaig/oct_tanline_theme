@@ -4,17 +4,18 @@ layout = "default"
 is_hidden = 0
 
 [Lbaig\Tanline\Components\ContactForm contactForm]
-
 ==
 <?php
-
 function onStart()
 {
     $this['recaptcha_site_key'] = \Lbaig\Tanline\Models\Settings::get('recaptcha_site_key');
 }
-
 ?>
 ==
+<div class="w-1/2 mx-auto">
+   {% content 'contact-page-description' %}
+</div>
+
 <div class="w-1/2 mx-auto">
     <div id="contact-form-loader" class="text-center hidden">
 	<div class="lds-heart"><div></div></div>
