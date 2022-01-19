@@ -97,7 +97,7 @@ $this->page->title = $product->name;
 	    </div>
 	    <div class="py-1"></div>
 	    <button data-action="add-to-cart" data-productid="{{ obProduct.id }}" class="cart-add px-8 py-4">Add to Cart</button>
-            {% else %}
+            {% elseif obProduct.in_store %}
             {% content 'in_store_only' %}
             {% endif %}
 	    
