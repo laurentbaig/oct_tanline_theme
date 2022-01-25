@@ -251,6 +251,27 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	 // once the shipping button is clicked, go ahead and create
 	 // (render) the payment button here
 	 $("#paypal-button-container").html('');
+	 let orderdata = {
+	     order: {
+		 basket_id: basketId,
+		 payment_method_id: 0,
+		 subtotal: subTotal,
+		 discount: discount,
+		 shipping: shipping,
+		 tax_amount: taxAmount,
+		 total_price: totalPrice,
+		 email: email,
+		 phone: phone,
+		 shipping_address: {
+		     addressee,
+		     street,
+		     city,
+		     state,
+		     country,
+		     postcode: zip
+		 },
+	     },
+	 };
 	 paypal.Buttons({
 	     style: {
 		 shape: 'rect',
@@ -261,7 +282,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	     createOrder: function(data, actions) {
 		 // disable button?
 		 $.request('Order::onBeforeCreateOrder', {
-		     data: data,
+		     data: orderdata,
 		     update: {}
 		 });
 		 return actions.order.create({
@@ -279,29 +300,12 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 			       .then(function(details) {
 				   // this is our callback space after
 				   // payment is confirmed via PayPal
-				   let data = {
-				       order: {
-					   basket_id: basketId,
-					   payment_method_id: 0,
-					   subtotal: subTotal,
-					   discount: discount,
-					   shipping: shipping,
-					   tax_amount: taxAmount,
-					   total_price: totalPrice,
-					   email: email,
-					   phone: phone,
-					   shipping_address: {
-					       addressee,
-					       street,
-					       city,
-					       state,
-					       country,
-					       postcode: zip
-					   },
-				       },
-				   };
+				   $.request('Order::onPaypalSuccess', {
+				       data: response,
+				       update: {}
+				   });
 				   $.request('Order::onCreate', {
-				       data: data,
+				       data: orderdata,
 				       update: {},
 				       success: function() {
 					   window.location = '/thank-you'
@@ -313,7 +317,6 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				       data: response,
 				       update: {}
 				   });
-				   console.log(response);
 			       }) ;
 	     }
 	 }).render('#paypal-button-container');
