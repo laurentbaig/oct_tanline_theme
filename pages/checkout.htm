@@ -260,6 +260,10 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	     },
 	     createOrder: function(data, actions) {
 		 // disable button?
+		 $.request('Order::onBeforeCreateOrder', {
+		     data: data,
+		     update: {}
+		 });
 		 return actions.order.create({
 		     purchase_units: [{
 			 amount: {
@@ -305,6 +309,10 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				   });
 			       })
 			       .catch(function (response) {
+				   $.request('Order::onPaypalError', {
+				       data: response,
+				       update: {}
+				   });
 				   console.log(response);
 			       }) ;
 	     }
