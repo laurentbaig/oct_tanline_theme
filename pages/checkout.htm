@@ -303,7 +303,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				   // this is our callback space after
 				   // payment is confirmed via PayPal
 				   $.request('Order::onPaypalSuccess', {
-				       data: response,
+				       data: details,
 				       update: {}
 				   });
 				   $.request('Order::onCreate', {
