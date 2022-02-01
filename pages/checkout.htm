@@ -281,6 +281,8 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	     },
 	     createOrder: function(data, actions) {
 		 // disable button?
+		 $("#paypal-button-container").addClass('hidden');
+		 $("#page-processing div").removeClass('hidden');
 		 $.request('Order::onBeforeCreateOrder', {
 		     data: orderdata,
 		     update: {}
@@ -293,9 +295,9 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 		     }]
 		 });
 	     },
-	     onApprove: function(data, actions) {
-		 $("#paypal-button-container").addClass('hidden');
-		 $("#page-processing div").removeClass('hidden');
+	     onApprove: function(ppdata, actions) {
+		 // $("#paypal-button-container").addClass('hidden');
+		 // $("#page-processing div").removeClass('hidden');
 		 return actions.order.capture()
 			       .then(function(details) {
 				   // this is our callback space after
@@ -312,9 +314,9 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				       }
 				   });
 			       })
-			       .catch(function (response) {
+			       .catch((response) => {
 				   $.request('Order::onPaypalError', {
-				       data: response,
+				       data: ppdata,
 				       update: {}
 				   });
 			       }) ;
