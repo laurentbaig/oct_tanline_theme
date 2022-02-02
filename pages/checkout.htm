@@ -307,7 +307,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				   // payment is confirmed via PayPal
 				   $("#processing-text").innerHTML = "Success!";
 				   $.request('Order::onPaypalSuccess', {
-				       data: details,
+				       data: { details: details },
 				       update: {}
 				   });
 				   $.request('Order::onCreate', {
@@ -315,7 +315,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				       update: {},
 				       success: function() {
 					   $("#processing-text").text("Order created!");
-					   window.location = '/thank-you'
+					   //window.location = '/thank-you'
 				       }
 				   });
 			       })
@@ -323,7 +323,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				   $("#processing-text").text(`A problem ocurred with your order. Please contact us about basket # ${basketId}`);
 				   $("#page-processing div").addClass('hidden');
 				   $.request('Order::onPaypalError', {
-				       data: ppdata,
+				       data: { response },
 				       update: {}
 				   });
 			       }) ;
