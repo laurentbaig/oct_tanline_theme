@@ -321,6 +321,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 			       })
 			       .catch((response) => {
 				   $("#processing-text").text(`A problem ocurred with your order. Please contact us about basket # ${basketId}`);
+				   $("#page-processing div").addClass('hidden');
 				   $.request('Order::onPaypalError', {
 				       data: ppdata,
 				       update: {}
