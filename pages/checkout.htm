@@ -123,7 +123,8 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 		<div>3. Payment</div>
 	    </div>
 	    <div class="card-body py-2 font-sans">
-		<div class="flex flex-row flex-wrap">
+		<div class="flex flex-column flex-nowrap">
+		    <div id="processing-text"></div>
 		    <div id="paypal-button-container"></div>
 		    <div id="page-processing" class="mx-auto lds-heart"><div class="hidden"></div></div>
 		</div>
@@ -282,6 +283,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	     createOrder: function(data, actions) {
 		 // disable button?
 		 $("#paypal-button-container").addClass('hidden');
+		 $("#processing-text").text("Submitting order to PayPal");
 		 $("#page-processing div").removeClass('hidden');
 		 $.request('Order::onBeforeCreateOrder', {
 		     data: orderdata,
@@ -298,10 +300,12 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	     onApprove: function(ppdata, actions) {
 		 // $("#paypal-button-container").addClass('hidden');
 		 // $("#page-processing div").removeClass('hidden');
+		 $("#processing-text").text("PayPal order approved. Capturing payment.");
 		 return actions.order.capture()
 			       .then(function(details) {
 				   // this is our callback space after
 				   // payment is confirmed via PayPal
+				   $("#processing-text").innerHTML = "Success!";
 				   $.request('Order::onPaypalSuccess', {
 				       data: details,
 				       update: {}
@@ -310,11 +314,13 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				       data: orderdata,
 				       update: {},
 				       success: function() {
+					   $("#processing-text").text("Order created!");
 					   window.location = '/thank-you'
 				       }
 				   });
 			       })
 			       .catch((response) => {
+				   $("#processing-text").text(`A problem ocurred with your order. Please contact us about basket # ${basketId}`);
 				   $.request('Order::onPaypalError', {
 				       data: ppdata,
 				       update: {}
