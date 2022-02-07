@@ -123,10 +123,12 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 		<div>3. Payment</div>
 	    </div>
 	    <div class="card-body py-2 font-sans">
-		<div class="flex flex-column flex-nowrap">
+		<div class="flex flex flex-nowrap">
+		    <div id="paypal-button-container" class="flex-1"></div>
+		    {#
 		    <div id="processing-text"></div>
-		    <div id="paypal-button-container"></div>
 		    <div id="page-processing" class="mx-auto lds-heart"><div class="hidden"></div></div>
+		    #}
 		</div>
 	    </div>
 
@@ -282,9 +284,9 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 	     },
 	     createOrder: function(data, actions) {
 		 // disable button?
-		 $("#paypal-button-container").addClass('hidden');
-		 $("#processing-text").text("Submitting order to PayPal");
-		 $("#page-processing div").removeClass('hidden');
+		 // $("#paypal-button-container").addClass('hidden');
+		 // $("#processing-text").text("Submitting order to PayPal");
+		 // $("#page-processing div").removeClass('hidden');
 		 $.request('Order::onBeforeCreateOrder', {
 		     data: orderdata,
 		     update: {}
@@ -320,8 +322,8 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				   });
 			       })
 			       .catch((response) => {
-				   $("#processing-text").text(`A problem ocurred with your order. Please contact us about basket # ${basketId}`);
-				   $("#page-processing div").addClass('hidden');
+				   // $("#processing-text").text(`A problem ocurred with your order. Please contact us about basket # ${basketId}`);
+				   // $("#page-processing div").addClass('hidden');
 				   $.request('Order::onPaypalError', {
 				       data: { response },
 				       update: {}
