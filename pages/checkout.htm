@@ -317,6 +317,7 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				       update: {},
 				       success: function() {
 					   $("#processing-text").text("Order created!");
+					   $("#paypal-button-container").addClass('hidden');
 					   window.location = '/thank-you'
 				       }
 				   });
