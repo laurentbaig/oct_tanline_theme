@@ -330,6 +330,12 @@ $this['paypal_client_id'] = \Lbaig\Tanline\Models\Settings::get('paypal_client_i
 				       update: {}
 				   });
 			       }) ;
+	     },
+	     onCancel: function (data) {
+		 window.location = '/basket';
+	     },
+	     onError: function (err) {
+		 alert("We're sorry. Something went wrong. It could be your card. It could be paypal.");
 	     }
 	 }).render('#paypal-button-container');
      }
