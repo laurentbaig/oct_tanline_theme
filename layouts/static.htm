@@ -2,10 +2,13 @@
 code = "main-menu"
 
 [session]
+security = "all"
 
 [Basket]
 
 [staticPage]
+useContent = 1
+default = 0
 ==
 <!DOCTYPE html>
 <html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en-US" >
@@ -82,7 +85,10 @@ code = "main-menu"
 	<div class="container mx-auto">
 	    <header id="header">
 		<div id="logo" data-content-field="site-title">
+		    <!-- 
 		    <h1 class="logo"><a href="/"><img class="mx-auto" src="{{ 'assets/images/tanline.png'| theme }}"></a></h1>
+		    -->
+		      <h1 class="logo"><a href="/"><img class="mx-auto" src="{{ this.theme.banner|media }}"></a></h1>
 		</div>
 
 		{% partial 'nav' %}

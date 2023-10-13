@@ -8,12 +8,15 @@ is_hidden = 0
 [ProductItem]
 slug = "{{ :slug }}"
 ==
+<?php
 function onEnd() {
 $product = $this->components['ProductItem']->get();
 if ($product) {
 $this->page->title = $product->name;
+$this->page->description = $product->description;
 }
 }
+?>
 ==
 {# Get product item #}
 {% set obProduct = ProductItem.get() %}
