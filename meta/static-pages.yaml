@@ -3,3 +3,4 @@ static-pages:
     newhome: {  }
     home-test: {  }
     typography: {  }
+    test-iframe: {  }

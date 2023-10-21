@@ -1,0 +1,38 @@
+description = "Embed another page in an iframe"
+
+[viewBag]
+snippetCode = "url-embed"
+snippetName = "URL Embed"
+snippetProperties[url][title] = "URL to embed"
+snippetProperties[url][type] = "string"
+snippetProperties[url][default] = ""
+snippetProperties[url][options][] = ""
+snippetProperties[height][title] = "IFrame Height"
+snippetProperties[height][type] = "string"
+snippetProperties[height][default] = "100vh"
+snippetProperties[height][options][] = ""
+==
+<style>
+ #page > .static-container {
+     margin: 0;
+     max-width: 100%;
+     width: 100%;
+     min-height: {{height}};
+     position: relative;
+ }
+ #page > .static-container > iframe {
+     border: 1px solid #aaa;
+     bottom: 0;
+     height: 100%;
+     left: 0;
+     margin: 0;
+     overflow: hidden;
+     padding: 0;
+     position: absolute;
+     right: 0;
+     top: 0;
+     width: 100%;
+     z-index: 9999;
+ }
+</style>
+<iframe src="{{url}}"></iframe>
