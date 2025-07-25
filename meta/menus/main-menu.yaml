@@ -15,41 +15,28 @@ items:
             isExternal: '0'
     -
         title: Webstore
+        nesting: ''
         type: cms-page
+        url: ''
         code: ''
         reference: shop
+        cmsPage: ''
+        replace: ''
         viewBag:
             isHidden: '0'
             cssClass: ''
             isExternal: '0'
     -
         title: 'Gallery Exhibitions'
-        nesting: ''
         type: cms-page
-        url: ''
         code: ''
         reference: gallery
-        cmsPage: ''
-        replace: ''
         viewBag:
-            isHidden: '0'
+            isHidden: '1'
             cssClass: ''
             isExternal: '0'
     -
-        title: 'Tiny Town Times'
-        nesting: ''
-        type: cms-page
-        url: ''
-        code: ''
-        reference: tiny-town-times
-        cmsPage: ''
-        replace: ''
-        viewBag:
-            isHidden: '0'
-            cssClass: ''
-            isExternal: '0'
-    -
-        title: 'Custom Work / Contact'
+        title: Contact
         nesting: ''
         type: cms-page
         url: ''
@@ -57,6 +44,17 @@ items:
         reference: contact
         cmsPage: ''
         replace: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Tiny Town Surplus'
+        nesting: '0'
+        type: static-page
+        code: ''
+        reference: tiny-town-surplus
+        replace: '0'
         viewBag:
             isHidden: '0'
             cssClass: ''
