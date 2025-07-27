@@ -1,0 +1,79 @@
+ul.carousel {
+    width: 100%;
+    aspect-ratio: 16/9;
+    padding: 9px 16px;
+    display: flex;
+    gap: 4%;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    anchor-name: --myCarousel;
+    scroll-marker-group: after;
+    scroll-behavior: smooth;
+}
+
+li {
+    list-style-type: none;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    padding: 20px;
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+}
+
+li:nth-child(even) {
+    background-color: cyan;
+}
+
+ul.carousel::scroll-button(*) {
+    border: 0;
+    font-size: 2rem;
+    background: none;
+    color: rgb(0 0 0 / 0.7);
+    cursor: pointer;
+    position: absolute;
+    position-anchor: --myCarousel;
+}
+ul.carousel::scroll-button(*):hover,
+ul.carousel::scroll-button(*):focus {
+    color: rgb(0 0 0/ 1);
+}
+ul.carousel::scroll-button(*):active {
+    translate: 1px 1px;
+}
+ul.carousel::scroll-button(*):disabled {
+    color: rgb(0 0 0 / 0.2);
+    cursor: unset;
+}
+ul.carousel::scroll-button(left) {
+    content: "◄";
+    left: calc(anchor(left) - 20px);
+    top: calc(anchor(top) + (anchor-size(--myCarousel height) / 2));
+}
+ul.carousel::scroll-button(right) {
+    content: "►";
+    right: calc(anchor(right) - 20px);
+    top: calc(anchor(top) + (anchor-size(--myCarousel height) / 2));
+}
+
+ul::scroll-marker-group {
+    position: absolute;
+    position-anchor: --myCarousel;
+    top: calc(anchor(bottom) - 70px);
+    justify-self: anchor-center;
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+li::scroll-marker {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background-color: transparent;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+li::scroll-marker:target-current {
+    background-color: black;
+}
