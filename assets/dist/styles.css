@@ -12166,7 +12166,7 @@ ul.carousel {
   display: -webkit-box;
   display: flex;
   gap: 4%;
-  overflow-x: scroll;
+  overflow-x: hidden;
   -ms-scroll-snap-type: x mandatory;
       scroll-snap-type: x mandatory;
   anchor-name: --myCarousel;
@@ -12174,7 +12174,7 @@ ul.carousel {
   scroll-behavior: smooth;
 }
 
-li {
+ul.carousel > li {
   list-style-type: none;
   background-color: #eee;
   border: 1px solid #ddd;
@@ -12182,10 +12182,18 @@ li {
   -webkit-box-flex: 0;
           flex: 0 0 100%;
   scroll-snap-align: center;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
 }
 
-li:nth-child(even) {
-  background-color: cyan;
+ul.carousel > li:nth-child(even) {
+}
+
+ul.carousel > li > img {
 }
 
 ul.carousel::scroll-button(*) {
@@ -12236,16 +12244,16 @@ ul::scroll-marker-group {
   gap: 20px;
 }
 
-li::scroll-marker {
+ul.carousel > li::scroll-marker {
   content: "";
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   background-color: transparent;
-  border: 2px solid black;
+  border: 1px solid #444;
   border-radius: 50%;
 }
 
-li::scroll-marker:target-current {
+ul.carousel > li::scroll-marker:target-current {
   background-color: black;
 }
 
