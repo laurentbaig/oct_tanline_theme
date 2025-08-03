@@ -1,0 +1,26 @@
+{% set carousel = __SELF__.carousel %}
+<div id="my-carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        {% for image in carousel.images %}
+        <button type="button" data-bs-target="#my-carousel" data-bs-slide-to="{{loop.index0}}" {% if loop.index0 == 0 %}class="active" {% endif %}aria-current="true" aria-label="Slide {{loop.index1}}"></button>
+        {% endfor %}
+    </div>    
+    <div class="carousel-inner">
+        {% for image in carousel.images %}
+        <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+            <img class="d-block w-100" src="{{image.path}}" alt="{{image.title}}">
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#my-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#my-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+{% if carousel.caption %}
+{{carousel.caption|raw}}
+{% endif %}

@@ -3,6 +3,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 import request from 'oc-request';
 
+import { Carousel } from 'bootstrap';
 
 /*
 function validateEmail(email) {
