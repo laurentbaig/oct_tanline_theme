@@ -39,18 +39,10 @@ code = "main-menu"
 
 	<!-- load in our stylesheet -->
 	<link rel="stylesheet" type="text/css" href="{{ 'assets/dist/styles.css?v=1'|theme }}">
-	<link rel="stylesheet" type="text/css" href="{{ 'assets/dist/bootstrapcustom.css?v=1'|theme }}">
+	<link rel="stylesheet" type="text/css" href="{{ 'assets/dist/bootstrapcustom.css?v=2'|theme }}">
 	{#
 	<link rel="stylesheet" href="//basehold.it/25">
 	#}
-        <style>
-         .visually-hidden {
-             opacity: 0;
-         }
-         .carousel img {
-             max-height: 100%;
-         }
-        </style>
 
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-KW4MC5MWDT"></script>
@@ -71,9 +63,11 @@ code = "main-menu"
 	    <nav class="md:hidden overflow-hidden hide-nav">
 		<ul class="list-none">
 		    {% for item in mainMenu.menuItems %}
+                    {% if not item.viewBag.isHidden %}
 		    <li class="text-center">
 			<a href="{{ item.url }}">{{ item.title }}</a>
 		    </li>
+                    {% endif %}
 		    {% endfor %}
 		</ul>
 	    </nav>
